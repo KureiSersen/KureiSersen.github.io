@@ -1,0 +1,566 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #faf8f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>神经网络 - KureiSersen site</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="特点 M-P神经元
+定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
+分类：
+单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+模型表达式：
+sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
+给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
+$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
+$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
+因此可以得到恒等式
+$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为" />
+  <meta name="author" content="Edwin.Liang" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://kureisersen.github.io/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/theme.png" />
+
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/bdb2e3fd70444357aebf7a5e32555300?s=160&amp;d=identicon" />
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/github.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://kureisersen.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+  integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
+  crossorigin="anonymous"
+/>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+  integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t"
+  crossorigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+  integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+  crossorigin="anonymous"
+></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () =>
+    renderMathInElement(document.body, {
+      
+      
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+      ],
+      
+      throwOnError: false,
+    }),
+  );
+</script>
+
+  
+  
+  
+
+  
+  <link rel="icon" href="https://kureisersen.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://kureisersen.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.122.0">
+
+  
+  
+  
+  
+  
+  <meta itemprop="name" content="神经网络">
+<meta itemprop="description" content="特点 M-P神经元
+定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
+分类：
+单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+模型表达式：
+sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
+给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
+$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
+$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
+因此可以得到恒等式
+$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为"><meta itemprop="datePublished" content="2024-02-12T22:06:08+08:00" />
+<meta itemprop="dateModified" content="2024-02-12T22:06:08+08:00" />
+<meta itemprop="wordCount" content="77">
+<meta itemprop="keywords" content="机器学习,神经网络," />
+  
+  <meta property="og:title" content="神经网络" />
+<meta property="og:description" content="特点 M-P神经元
+定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
+分类：
+单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+模型表达式：
+sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
+给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
+$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
+$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
+因此可以得到恒等式
+$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-12T22:06:08+08:00" />
+<meta property="article:modified_time" content="2024-02-12T22:06:08+08:00" />
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="神经网络"/>
+<meta name="twitter:description" content="特点 M-P神经元
+定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
+分类：
+单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+模型表达式：
+sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
+给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
+$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
+$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
+因此可以得到恒等式
+$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为"/>
+
+  
+  
+  
+  <link rel="canonical" href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://kureisersen.github.io/"
+      >KureiSersen site</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#faf8f1'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/KureiSersen"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">神经网络</h1>
+
+    
+    <div class="text-sm antialiased opacity-60">
+      
+      <time>Feb 12, 2024</time>
+      
+      
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Edwin.Liang</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h3 id="特点">特点</h3>
+<ol>
+<li>
+<p>M-P神经元</p>
+<ol>
+<li>
+<p>定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，<strong>做减法</strong>进行比较，最后经过激活函数，模拟<strong>抑制</strong>和<strong>激活</strong>的过程，处理之后输出</p>
+</li>
+<li>
+<p>模型表达式：
+$$
+y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx+b)
+$$</p>
+</li>
+<li>
+<p>分类：</p>
+<ol>
+<li>单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机</li>
+<li>多个M-P神经元：神经网络</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>感知机</p>
+<ol>
+<li>
+<p>模型表达式：</p>
+<ol>
+<li>sgn阶跃函数型感知机</li>
+</ol>
+<p>$$
+y=sgn(w^Tx-\theta)=\left{
+\begin{aligned}
+1 &amp;,&amp; w^Tx-\theta \geq0 \
+0 &amp;,&amp; w^Tx-\theta &lt;0\
+\end{aligned}
+\right.
+$$</p>
+<ol start="2">
+<li>sigmoid对数几率函数型感知机
+$$
+y=sigmoid(w^Tx-\theta)=\left{
+\begin{aligned}
+1 &amp;,&amp; w^Tx-\theta \geq0 \
+0 &amp;,&amp; w^Tx-\theta &lt;0\
+\end{aligned}
+\right.
+$$</li>
+</ol>
+</li>
+<li>
+<p>几何角度解释：</p>
+<ol>
+<li>给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面
+$$
+其中w^T-\theta为超平面方程\
+1.超平面方程不唯一\
+2.法向量w垂直于超平面\
+3.法向量w和位移项\theta确定一个唯一的超平面\
+4.法向量w指向的那一半空间为证空间，另一半为负空间
+$$</li>
+</ol>
+</li>
+<li>
+<p>求解策略：</p>
+<ol>
+<li>
+<p>将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能</p>
+<ol>
+<li>
+<p>$$
+w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0
+$$</p>
+</li>
+<li>
+<p>$$
+w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1
+$$</p>
+</li>
+</ol>
+</li>
+<li>
+<p>因此可以得到恒等式</p>
+<ol>
+<li>$$
+(y&rsquo;-y)(w^Tx-\theta)\geq0
+$$</li>
+</ol>
+</li>
+<li>
+<p>所以给定的数据集T，损失函数可以定义为</p>
+<ol>
+<li>
+<p>$$
+L(w,\theta)=\sum\limits_{}^{}(y&rsquo;-y)(w^Tx-\theta)
+$$</p>
+</li>
+<li>
+<p>显然，此损失函数是非负的，如果没有误分类点，损失函数值是0。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li></li>
+</ol>
+</li>
+<li>
+<p>神经网络</p>
+</li>
+</ol>
+<h3 id="适用范围">适用范围</h3>
+<h3 id="求解方法">求解方法</h3>
+</section>
+
+  
+  
+  <footer class="mt-12 flex flex-wrap">
+     
+    <a
+      class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]"
+      href="https://kureisersen.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"
+      >机器学习</a
+    >
+     
+    <a
+      class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]"
+      href="https://kureisersen.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"
+      >神经网络</a
+    >
+    
+  </footer>
+  
+
+  
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/"
+      ><span class="mr-1.5">←</span><span>一元线性回归</span></a
+    >
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%86%B3%E7%AD%96%E6%A0%91/"
+      ><span>决策树</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://kureisersen.github.io/">KureiSersen site</a>
+  </div>
+  
+</footer>
+
+  </body>
+</html>

@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>KureiSersen site</title>
-    <link>https://kureisersen.github.io/</link>
+    <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
     <description>Recent content on KureiSersen site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 12 Feb 2024 22:11:30 +0800</lastBuildDate>
-    <atom:link href="https://kureisersen.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>对数几率回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</link>
@@ -55,34 +55,6 @@
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%AF%BC%E8%AE%BA/</link>
       <pubDate>Mon, 12 Feb 2024 21:43:13 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%AF%BC%E8%AE%BA/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>刑法</title>
-      <link>https://kureisersen.github.io/post/%E6%B3%95%E5%AD%A6/%E5%88%91%E6%B3%95/</link>
-      <pubDate>Mon, 12 Feb 2024 21:38:58 +0800</pubDate>
-      <guid>https://kureisersen.github.io/post/%E6%B3%95%E5%AD%A6/%E5%88%91%E6%B3%95/</guid>
-      <description> 基础知识 什么是刑法 犯罪及其法律后果的总称，必须由这两部分组成（犯罪论、后果论） 1+11+1（一部刑法、11部修正案、一部单行刑法） 任何理论和解释都包含三种观念：正说、反说、折中说 行为无价值（行为本身错误）、结果无价值（造成了坏的结果） 行为无价值不能作为入罪的基础，不能因为行为本身错误就发动刑罚，但是行为无价值可以作为否定刑罚权的一种依据，如果一种行为是符合伦理道德的，那就不应该受到刑罚，即： 法益作为入罪的基础，伦理作为出罪的依据 刑法的机能 一方面惩罚犯罪、另一方面限制惩罚犯罪的权力本身（保证机能，保障人权） 如何来解释法律 法律一经制定就已经滞后了 形式解释和实质解释 形式解释：只关注语言的形式逻辑 实质解释：探究语言背后的精神 只有通过了形式解释的筛查，才能去探究背后的精神 主观解释和客观解释 主观解释：探究立法者的原意 客观解释：根据客观社会的实际需要 解释的分类： 按照解释的效益： 有权解释：有法律效益的解释 立法解释（全国人大常委会）、司法解释（最高人民法院、最高人民检察院），两者发生冲突时，立法解释优先 立法解释、司法解释不能类推 无权解释：无法律效益的解释 学理解释：学者所作，只能做参考 按照解释的方法： 文理解释：从文字符号上对语言进行解释 论理解释：如果文理解释的结论不唯一（不合理），那么启动论理解释 论理解释效果（限制或者扩张文字描述的范围）： 扩张效果 缩小效果 体系解释：要把法条放到整个刑法典中进行综合解释，甚至放到整个法律体系中进行综合解释，避免互相冲突，最终的效果即可能使扩张，又可能是缩小，但是仅有一种效果，不能即扩张同时又是缩小 当然解释：刑法条文没有明确规定，但实际上已经包含在法条的意思之中，从而可以在法条中自然而然推出的解释 入罪型：举轻以明重，必须要同时兼具形式解释和实质解释才可以量罪 出罪刑：举重以明轻，只要具备实质解释，哪怕是类推扩张了法条语义，也可以进行量刑 同类解释：对于法条中的等或者其他，应当按照所列举的内容、性质来进行解释，必须要有等价值性 反对解释：根据刑法条文的正面表述，来推导他的反面含义 补正解释：刑法中存在漏洞，通过修补的方法，对漏洞进行补正，重点在于正，而不在于补 目的解释： 刑法适用范围 </description>
-    </item>
-    <item>
-      <title>法考科目大全</title>
-      <link>https://kureisersen.github.io/post/%E6%B3%95%E5%AD%A6/%E6%B3%95%E8%80%83%E7%A7%91%E7%9B%AE%E5%A4%A7%E5%85%A8/</link>
-      <pubDate>Mon, 12 Feb 2024 21:33:51 +0800</pubDate>
-      <guid>https://kureisersen.github.io/post/%E6%B3%95%E5%AD%A6/%E6%B3%95%E8%80%83%E7%A7%91%E7%9B%AE%E5%A4%A7%E5%85%A8/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Contact</title>
-      <link>https://kureisersen.github.io/contact/</link>
-      <pubDate>Mon, 12 Feb 2024 18:09:55 +0800</pubDate>
-      <guid>https://kureisersen.github.io/contact/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>About</title>
-      <link>https://kureisersen.github.io/about/</link>
-      <pubDate>Mon, 12 Feb 2024 18:09:44 +0800</pubDate>
-      <guid>https://kureisersen.github.io/about/</guid>
       <description></description>
     </item>
   </channel>

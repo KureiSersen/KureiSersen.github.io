@@ -1,0 +1,618 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #faf8f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>决策树 - KureiSersen site</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="特点 算法原理
+从逻辑角度,一堆if else语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 ID3决策树
+补充:
+详见对数几率回归中的自信息、信息熵
+纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
+条件熵
+$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+模型表达式：
+$$ a_*=arg\enspace max\enspace Gain(D,a) $$ 模型缺陷：
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+模型由来：
+为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
+改善后的模型思路：
+先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
+有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
+实际构造算法： $$
+基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2." />
+  <meta name="author" content="Edwin.Liang" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://kureisersen.github.io/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/theme.png" />
+
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/bdb2e3fd70444357aebf7a5e32555300?s=160&amp;d=identicon" />
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/github.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://kureisersen.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+  integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
+  crossorigin="anonymous"
+/>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+  integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t"
+  crossorigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+  integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+  crossorigin="anonymous"
+></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () =>
+    renderMathInElement(document.body, {
+      
+      
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+      ],
+      
+      throwOnError: false,
+    }),
+  );
+</script>
+
+  
+  
+  
+
+  
+  <link rel="icon" href="https://kureisersen.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://kureisersen.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.122.0">
+
+  
+  
+  
+  
+  
+  <meta itemprop="name" content="决策树">
+<meta itemprop="description" content="特点 算法原理
+从逻辑角度,一堆if else语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 ID3决策树
+补充:
+详见对数几率回归中的自信息、信息熵
+纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
+条件熵
+$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+模型表达式：
+$$ a_*=arg\enspace max\enspace Gain(D,a) $$ 模型缺陷：
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+模型由来：
+为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
+改善后的模型思路：
+先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
+有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
+实际构造算法： $$
+基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2."><meta itemprop="datePublished" content="2024-02-12T21:47:11+08:00" />
+<meta itemprop="dateModified" content="2024-02-12T21:47:11+08:00" />
+<meta itemprop="wordCount" content="86">
+<meta itemprop="keywords" content="机器学习,决策树," />
+  
+  <meta property="og:title" content="决策树" />
+<meta property="og:description" content="特点 算法原理
+从逻辑角度,一堆if else语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 ID3决策树
+补充:
+详见对数几率回归中的自信息、信息熵
+纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
+条件熵
+$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+模型表达式：
+$$ a_*=arg\enspace max\enspace Gain(D,a) $$ 模型缺陷：
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+模型由来：
+为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
+改善后的模型思路：
+先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
+有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
+实际构造算法： $$
+基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%86%B3%E7%AD%96%E6%A0%91/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-12T21:47:11+08:00" />
+<meta property="article:modified_time" content="2024-02-12T21:47:11+08:00" />
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="决策树"/>
+<meta name="twitter:description" content="特点 算法原理
+从逻辑角度,一堆if else语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 ID3决策树
+补充:
+详见对数几率回归中的自信息、信息熵
+纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
+条件熵
+$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
+模型表达式：
+$$ a_*=arg\enspace max\enspace Gain(D,a) $$ 模型缺陷：
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+模型由来：
+为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
+改善后的模型思路：
+先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
+有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
+实际构造算法： $$
+基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2."/>
+
+  
+  
+  
+  <link rel="canonical" href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%86%B3%E7%AD%96%E6%A0%91/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://kureisersen.github.io/"
+      >KureiSersen site</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#faf8f1'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/KureiSersen"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">决策树</h1>
+
+    
+    <div class="text-sm antialiased opacity-60">
+      
+      <time>Feb 12, 2024</time>
+      
+      
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Edwin.Liang</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h3 id="特点">特点</h3>
+<ol>
+<li>
+<p>算法原理</p>
+<ol>
+<li>从逻辑角度,一堆if  else语句的组合</li>
+<li>从几何角度,根据某种准则划分特征空间
+<ol>
+<li>最终目的:将样本越分越纯</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>ID3决策树</p>
+<ol>
+<li>
+<p>补充:</p>
+<ol>
+<li>
+<p>详见对数几率回归中的自信息、信息熵</p>
+</li>
+<li>
+<p>纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映</p>
+</li>
+<li>
+<p>条件熵</p>
+<ol>
+<li>
+<p>$$
+假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\
+D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\
+\frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\
+那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)
+$$</p>
+</li>
+<li>
+<p>信息增益
+$$
+在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\
+Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)
+$$</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>模型表达式：</p>
+<ol>
+<li>$$
+a_*=arg\enspace max\enspace Gain(D,a)
+$$</li>
+</ol>
+</li>
+<li>
+<p>模型缺陷：</p>
+<ol>
+<li>信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>C4.5决策树</p>
+<ol>
+<li>
+<p>模型由来：</p>
+<ol>
+<li>为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益</li>
+</ol>
+</li>
+<li>
+<p>因此引入新定义：增益率
+$$
+Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\
+其中
+IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\
+a的取值个数V越大，通常IV(a)越大，\
+因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反
+$$</p>
+</li>
+<li>
+<p>改善后的模型思路：</p>
+<ol>
+<li>先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性</li>
+<li>用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性，</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>CART决策树</p>
+<ol>
+<li>
+<p>有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度
+$$
+定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\
+因此，基尼值越小，碰到异类的概率越小，纯度越高。\
+Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\
+=\sum\limits_{k=1}^{|y|}p_k(1-p_k)\
+=1-\sum\limits_{k=1}^{|y|}p_k^2
+$$</p>
+</li>
+<li>
+<p>类比信息熵和条件熵，我们得出在条件v下的基尼指数
+$$
+Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v)
+$$</p>
+</li>
+<li>
+<p>模型表达式：
+$$
+a_*=arg\enspace max\enspace Gini_index(D,a)
+$$</p>
+</li>
+<li>
+<p>实际构造算法：
+$$</p>
+<ol>
+<li>基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\
+Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) + \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v})
+$$</li>
+</ol>
+<p>$$
+2.选择基尼指数最小的属性及其对应取值作为最有划分属性和最优划分点
+$$</p>
+<p>$$
+3.重复以上两步，知道满足停止条件
+$$</p>
+<p>$$
+因此，CART决策树一定是二叉树，而ID3不一定是二叉树
+$$</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="适用范围">适用范围</h3>
+<ol>
+<li>主流的使用方法是在集成学习的时候用作森林模型</li>
+</ol>
+<h3 id="求解方法">求解方法</h3>
+</section>
+
+  
+  
+  <footer class="mt-12 flex flex-wrap">
+     
+    <a
+      class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]"
+      href="https://kureisersen.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"
+      >机器学习</a
+    >
+     
+    <a
+      class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]"
+      href="https://kureisersen.github.io/tags/%E5%86%B3%E7%AD%96%E6%A0%91"
+      >决策树</a
+    >
+    
+  </footer>
+  
+
+  
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"
+      ><span class="mr-1.5">←</span><span>神经网络</span></a
+    >
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%AF%BC%E8%AE%BA/"
+      ><span>导论</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://kureisersen.github.io/">KureiSersen site</a>
+  </div>
+  
+</footer>
+
+  </body>
+</html>
