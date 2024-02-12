@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>神经网络 on KureiSersen site</title>
+    <link>https://kureisersen.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</link>
+    <description>Recent content in 神经网络 on KureiSersen site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Feb 2024 22:06:08 +0800</lastBuildDate>
+    <atom:link href="https://kureisersen.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>神经网络</title>
+      <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</link>
+      <pubDate>Mon, 12 Feb 2024 22:06:08 +0800</pubDate>
+      <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</guid>
+      <description>特点 M-P神经元&#xA;定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出&#xA;模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx+b) $$&#xA;分类：&#xA;单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机&#xA;模型表达式：&#xA;sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;amp;,&amp;amp; w^Tx-\theta \geq0 \ 0 &amp;amp;,&amp;amp; w^Tx-\theta &amp;lt;0\ \end{aligned} \right. $$&#xA;sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;amp;,&amp;amp; w^Tx-\theta \geq0 \ 0 &amp;amp;,&amp;amp; w^Tx-\theta &amp;lt;0\ \end{aligned} \right. $$ 几何角度解释：&#xA;给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：&#xA;将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能&#xA;$$ w^Tx-\theta \geq0 ,模型输出为y&amp;rsquo;=1,样本正确输出应该为y=0 $$&#xA;$$ w^Tx-\theta \leq0 ,模型输出为y&amp;rsquo;=0,样本正确输出应该为y=1 $$&#xA;因此可以得到恒等式&#xA;$$ (y&amp;rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为</description>
+    </item>
+  </channel>
+</rss>

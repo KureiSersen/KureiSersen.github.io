@@ -1,0 +1,459 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #faf8f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>一元线性回归 - KureiSersen site</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有==连续==的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
+在（2）式的基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值 $$
+在（3）式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量 $$
+在（4）式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量\ 当肤色为黄色是，x_4，x_5，x_6代入值[1,0,0] $$
+求解方法 最小二乘法估计 极大似然估计 " />
+  <meta name="author" content="Edwin.Liang" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://kureisersen.github.io/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/theme.png" />
+
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/bdb2e3fd70444357aebf7a5e32555300?s=160&amp;d=identicon" />
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/github.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://kureisersen.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+  integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
+  crossorigin="anonymous"
+/>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+  integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t"
+  crossorigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+  integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+  crossorigin="anonymous"
+></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () =>
+    renderMathInElement(document.body, {
+      
+      
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+      ],
+      
+      throwOnError: false,
+    }),
+  );
+</script>
+
+  
+  
+  
+
+  
+  <link rel="icon" href="https://kureisersen.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://kureisersen.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.122.0">
+
+  
+  
+  
+  
+  
+  <meta itemprop="name" content="一元线性回归">
+<meta itemprop="description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有==连续==的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
+在（2）式的基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值 $$
+在（3）式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量 $$
+在（4）式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量\ 当肤色为黄色是，x_4，x_5，x_6代入值[1,0,0] $$
+求解方法 最小二乘法估计 极大似然估计 "><meta itemprop="datePublished" content="2024-02-12T22:07:34+08:00" />
+<meta itemprop="dateModified" content="2024-02-12T22:07:34+08:00" />
+<meta itemprop="wordCount" content="40">
+<meta itemprop="keywords" content="机器学习,线性模型,一元线性回归," />
+  
+  <meta property="og:title" content="一元线性回归" />
+<meta property="og:description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有==连续==的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
+在（2）式的基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值 $$
+在（3）式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量 $$
+在（4）式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量\ 当肤色为黄色是，x_4，x_5，x_6代入值[1,0,0] $$
+求解方法 最小二乘法估计 极大似然估计 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-12T22:07:34+08:00" />
+<meta property="article:modified_time" content="2024-02-12T22:07:34+08:00" />
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="一元线性回归"/>
+<meta name="twitter:description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有==连续==的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
+在（2）式的基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值 $$
+在（3）式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量 $$
+在（4）式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b\ 此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量\ 当肤色为黄色是，x_4，x_5，x_6代入值[1,0,0] $$
+求解方法 最小二乘法估计 极大似然估计 "/>
+
+  
+  
+  
+  <link rel="canonical" href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://kureisersen.github.io/"
+      >KureiSersen site</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#faf8f1'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/KureiSersen"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">一元线性回归</h1>
+
+    
+    <div class="text-sm antialiased opacity-60">
+      
+      <time>Feb 12, 2024</time>
+      
+      
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Edwin.Liang</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h3 id="特点">特点</h3>
+<ol>
+<li>模型表达式：
+$$
+f(x) = wx + b
+$$</li>
+</ol>
+<h3 id="适用范围">适用范围</h3>
+<ol>
+<li>
+<p>求解数据具有==连续==的特征，比如身高从低到高，此时应使用
+$$
+f(x) = w_1 x_1 + b
+$$</p>
+</li>
+<li>
+<p>在（2）式的基础上加入二值离散特征【颜值】（美：1，丑：0）
+$$
+f(x)=w_1x_1+w_2x_2+b\
+此时w_1x_1项表示身高，w_2x_2表示颜值
+$$</p>
+</li>
+<li>
+<p>在（3）式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3）
+$$
+f(x)=w_1x_1 +w_2x_2+w_3x_3+b\
+此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量
+$$</p>
+</li>
+<li>
+<p>在（4）式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]）
+$$
+f(x)=w_1x_1 +w_2x_2+w_3x_3+w_4x_4+w_5x_5+w_6x_6+b\
+此时w_1x_1项表示身高，w_2x_2表示颜值，w_3x_3表示饭量\
+当肤色为黄色是，x_4，x_5，x_6代入值[1,0,0]
+$$</p>
+</li>
+</ol>
+<h3 id="求解方法">求解方法</h3>
+<ol>
+<li>最小二乘法估计</li>
+<li>极大似然估计</li>
+</ol>
+</section>
+
+  
+  
+  <footer class="mt-12 flex flex-wrap">
+     
+    <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
+     
+    <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B">线性模型</a>
+     
+    <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92">一元线性回归</a>
+    
+  </footer>
+  
+
+  
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/"><span class="mr-1.5">←</span><span>二分类线性判别分析</span></a>
+    
+    
+    <a class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"><span>神经网络</span><span class="ml-1.5">→</span></a>
+    
+  </nav>
+  
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+</article>
+<aside>
+  <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#特点">特点</a></li>
+        <li><a href="#适用范围">适用范围</a></li>
+        <li><a href="#求解方法">求解方法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</aside>
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://kureisersen.github.io/">KureiSersen site</a>
+  </div>
+  
+</footer>
+
+  </body>
+</html>
