@@ -62,19 +62,23 @@
   
   
   <meta name="description" content="特点 M-P神经元
-定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+定义：接受$n$个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
 模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
 分类：
-单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+单个$M-P$神经元：使用$sgn$、$sigmoid$作为激活函数，即为感知机 多个$M-P$神经元：神经网络 感知机
 模型表达式：
-sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
-sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
-给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+$sgn$​阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)= \left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+几何角度解释：
+给定一个线性可分的数据集$T$，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面，其中$w^T-\theta$为超平面方程 超平面方程不唯一 法向量$w$垂直于超平面 法向量$w$和位移项$\theta$确定一个唯一的超平面 法向量$w$指向的那一半空间为证空间，另一半为负空间 求解策略：
 将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
-$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
-$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
-因此可以得到恒等式
-$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为" />
+$w^Tx-\theta \geq0$ ,模型输出为$y&rsquo;=1$,样本正确输出应该为$y=0$
+$w^Tx-\theta \leq0$ ,模型输出为$y&rsquo;=0$,样本正确输出应该为$y=1$
+因此可以得到恒等式 $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$
+所以给定的数据集T，损失函数可以定义为
+$$ L(w,\theta)=\sum\limits_{}^{}(y&rsquo;-y)(w^Tx-\theta) $$
+显然，此损失函数是非负的，如果没有误分类点，损失函数值是$0$。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。 神经网络
+适用范围 求解方法 " />
   <meta name="author" content="Edwin.Liang" />
   
 
@@ -108,12 +112,6 @@ $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可
   
 
   
-  
-  <script
-    defer
-    src="https://kureisersen.github.io/highlight.min.js"
-    onload="hljs.initHighlightingOnLoad();"
-  ></script>
   
 
   
@@ -171,38 +169,46 @@ $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可
   
   <meta itemprop="name" content="神经网络">
 <meta itemprop="description" content="特点 M-P神经元
-定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+定义：接受$n$个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
 模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
 分类：
-单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+单个$M-P$神经元：使用$sgn$、$sigmoid$作为激活函数，即为感知机 多个$M-P$神经元：神经网络 感知机
 模型表达式：
-sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
-sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
-给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+$sgn$​阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)= \left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+几何角度解释：
+给定一个线性可分的数据集$T$，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面，其中$w^T-\theta$为超平面方程 超平面方程不唯一 法向量$w$垂直于超平面 法向量$w$和位移项$\theta$确定一个唯一的超平面 法向量$w$指向的那一半空间为证空间，另一半为负空间 求解策略：
 将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
-$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
-$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
-因此可以得到恒等式
-$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为"><meta itemprop="datePublished" content="2024-02-12T22:06:08+08:00" />
+$w^Tx-\theta \geq0$ ,模型输出为$y&rsquo;=1$,样本正确输出应该为$y=0$
+$w^Tx-\theta \leq0$ ,模型输出为$y&rsquo;=0$,样本正确输出应该为$y=1$
+因此可以得到恒等式 $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$
+所以给定的数据集T，损失函数可以定义为
+$$ L(w,\theta)=\sum\limits_{}^{}(y&rsquo;-y)(w^Tx-\theta) $$
+显然，此损失函数是非负的，如果没有误分类点，损失函数值是$0$。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。 神经网络
+适用范围 求解方法 "><meta itemprop="datePublished" content="2024-02-12T22:06:08+08:00" />
 <meta itemprop="dateModified" content="2024-02-12T22:06:08+08:00" />
-<meta itemprop="wordCount" content="77">
+<meta itemprop="wordCount" content="71">
 <meta itemprop="keywords" content="机器学习,神经网络," />
   
   <meta property="og:title" content="神经网络" />
 <meta property="og:description" content="特点 M-P神经元
-定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+定义：接受$n$个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
 模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
 分类：
-单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+单个$M-P$神经元：使用$sgn$、$sigmoid$作为激活函数，即为感知机 多个$M-P$神经元：神经网络 感知机
 模型表达式：
-sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
-sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
-给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+$sgn$​阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)= \left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+几何角度解释：
+给定一个线性可分的数据集$T$，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面，其中$w^T-\theta$为超平面方程 超平面方程不唯一 法向量$w$垂直于超平面 法向量$w$和位移项$\theta$确定一个唯一的超平面 法向量$w$指向的那一半空间为证空间，另一半为负空间 求解策略：
 将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
-$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
-$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
-因此可以得到恒等式
-$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为" />
+$w^Tx-\theta \geq0$ ,模型输出为$y&rsquo;=1$,样本正确输出应该为$y=0$
+$w^Tx-\theta \leq0$ ,模型输出为$y&rsquo;=0$,样本正确输出应该为$y=1$
+因此可以得到恒等式 $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$
+所以给定的数据集T，损失函数可以定义为
+$$ L(w,\theta)=\sum\limits_{}^{}(y&rsquo;-y)(w^Tx-\theta) $$
+显然，此损失函数是非负的，如果没有误分类点，损失函数值是$0$。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。 神经网络
+适用范围 求解方法 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-02-12T22:06:08+08:00" />
@@ -212,19 +218,23 @@ $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可
   
   <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="神经网络"/>
 <meta name="twitter:description" content="特点 M-P神经元
-定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
+定义：接受$n$个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出
 模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx&#43;b) $$
 分类：
-单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机 多个M-P神经元：神经网络 感知机
+单个$M-P$神经元：使用$sgn$、$sigmoid$作为激活函数，即为感知机 多个$M-P$神经元：神经网络 感知机
 模型表达式：
-sgn阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$
-sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \ 0 &amp;,&amp; w^Tx-\theta &lt;0\ \end{aligned} \right. $$ 几何角度解释：
-给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面 $$ 其中w^T-\theta为超平面方程\ 1.超平面方程不唯一\ 2.法向量w垂直于超平面\ 3.法向量w和位移项\theta确定一个唯一的超平面\ 4.法向量w指向的那一半空间为证空间，另一半为负空间 $$ 求解策略：
+$sgn$​阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)= \left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left\{ \begin{aligned} 1 &amp;,&amp; w^Tx-\theta \geq0 \newline 0 &amp;,&amp; w^Tx-\theta &lt;0\newline \end{aligned} \right. $$
+几何角度解释：
+给定一个线性可分的数据集$T$，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面，其中$w^T-\theta$为超平面方程 超平面方程不唯一 法向量$w$垂直于超平面 法向量$w$和位移项$\theta$确定一个唯一的超平面 法向量$w$指向的那一半空间为证空间，另一半为负空间 求解策略：
 将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能
-$$ w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0 $$
-$$ w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1 $$
-因此可以得到恒等式
-$$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可以定义为"/>
+$w^Tx-\theta \geq0$ ,模型输出为$y&rsquo;=1$,样本正确输出应该为$y=0$
+$w^Tx-\theta \leq0$ ,模型输出为$y&rsquo;=0$,样本正确输出应该为$y=1$
+因此可以得到恒等式 $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$
+所以给定的数据集T，损失函数可以定义为
+$$ L(w,\theta)=\sum\limits_{}^{}(y&rsquo;-y)(w^Tx-\theta) $$
+显然，此损失函数是非负的，如果没有误分类点，损失函数值是$0$。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。 神经网络
+适用范围 求解方法 "/>
 
   
   
@@ -385,7 +395,7 @@ $$ (y&rsquo;-y)(w^Tx-\theta)\geq0 $$ 所以给定的数据集T，损失函数可
 <p>M-P神经元</p>
 <ol>
 <li>
-<p>定义：接受n个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，<strong>做减法</strong>进行比较，最后经过激活函数，模拟<strong>抑制</strong>和<strong>激活</strong>的过程，处理之后输出</p>
+<p>定义：接受$n$个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，<strong>做减法</strong>进行比较，最后经过激活函数，模拟<strong>抑制</strong>和<strong>激活</strong>的过程，处理之后输出</p>
 </li>
 <li>
 <p>模型表达式：
@@ -396,8 +406,8 @@ $$</p>
 <li>
 <p>分类：</p>
 <ol>
-<li>单个M-P神经元：使用sgn、sigmoid作为激活函数，即为感知机</li>
-<li>多个M-P神经元：神经网络</li>
+<li>单个$M-P$神经元：使用$sgn$、$sigmoid$作为激活函数，即为感知机</li>
+<li>多个$M-P$神经元：神经网络</li>
 </ol>
 </li>
 </ol>
@@ -408,39 +418,42 @@ $$</p>
 <li>
 <p>模型表达式：</p>
 <ol>
-<li>sgn阶跃函数型感知机</li>
-</ol>
-<p>$$
-y=sgn(w^Tx-\theta)=\left{
+<li>
+<p>$sgn$​阶跃函数型感知机
+$$
+y=sgn(w^Tx-\theta)=
+\left\{
 \begin{aligned}
-1 &amp;,&amp; w^Tx-\theta \geq0 \
-0 &amp;,&amp; w^Tx-\theta &lt;0\
+1 &amp;,&amp; w^Tx-\theta \geq0 \newline
+0 &amp;,&amp; w^Tx-\theta &lt;0\newline
 \end{aligned}
 \right.
 $$</p>
-<ol start="2">
-<li>sigmoid对数几率函数型感知机
+</li>
+<li>
+<p>sigmoid对数几率函数型感知机
 $$
-y=sigmoid(w^Tx-\theta)=\left{
+y=sigmoid(w^Tx-\theta)=\left\{
 \begin{aligned}
-1 &amp;,&amp; w^Tx-\theta \geq0 \
-0 &amp;,&amp; w^Tx-\theta &lt;0\
+1 &amp;,&amp; w^Tx-\theta \geq0 \newline
+0 &amp;,&amp; w^Tx-\theta &lt;0\newline
 \end{aligned}
 \right.
-$$</li>
+$$</p>
+</li>
 </ol>
 </li>
 <li>
 <p>几何角度解释：</p>
 <ol>
-<li>给定一个线性可分的数据集T，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面
-$$
-其中w^T-\theta为超平面方程\
-1.超平面方程不唯一\
-2.法向量w垂直于超平面\
-3.法向量w和位移项\theta确定一个唯一的超平面\
-4.法向量w指向的那一半空间为证空间，另一半为负空间
-$$</li>
+<li>给定一个线性可分的数据集$T$，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面，其中$w^T-\theta$为超平面方程
+<ol>
+<li>超平面方程不唯一</li>
+<li>法向量$w$垂直于超平面</li>
+<li>法向量$w$和位移项$\theta$确定一个唯一的超平面</li>
+<li>法向量$w$指向的那一半空间为证空间，另一半为负空间</li>
+</ol>
+</li>
 </ol>
 </li>
 <li>
@@ -450,41 +463,30 @@ $$</li>
 <p>将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能</p>
 <ol>
 <li>
-<p>$$
-w^Tx-\theta \geq0 ,模型输出为y&rsquo;=1,样本正确输出应该为y=0
-$$</p>
+<p>$w^Tx-\theta \geq0$ ,模型输出为$y&rsquo;=1$,样本正确输出应该为$y=0$</p>
 </li>
 <li>
-<p>$$
-w^Tx-\theta \leq0 ,模型输出为y&rsquo;=0,样本正确输出应该为y=1
-$$</p>
+<p>$w^Tx-\theta \leq0$ ,模型输出为$y&rsquo;=0$,样本正确输出应该为$y=1$</p>
 </li>
 </ol>
 </li>
 <li>
-<p>因此可以得到恒等式</p>
-<ol>
-<li>$$
+<p>因此可以得到恒等式
+$$
 (y&rsquo;-y)(w^Tx-\theta)\geq0
-$$</li>
-</ol>
+$$</p>
 </li>
 <li>
 <p>所以给定的数据集T，损失函数可以定义为</p>
-<ol>
-<li>
 <p>$$
 L(w,\theta)=\sum\limits_{}^{}(y&rsquo;-y)(w^Tx-\theta)
 $$</p>
-</li>
-<li>
-<p>显然，此损失函数是非负的，如果没有误分类点，损失函数值是0。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。</p>
-</li>
+<ol>
+<li>显然，此损失函数是非负的，如果没有误分类点，损失函数值是$0$。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。</li>
 </ol>
 </li>
 </ol>
 </li>
-<li></li>
 </ol>
 </li>
 <li>
@@ -557,7 +559,16 @@ $$</p>
     &copy; 2024
     <a class="link" href="https://kureisersen.github.io/">KureiSersen site</a>
   </div>
-  
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >✎ Paper</a
+  >
 </footer>
 
   </body>

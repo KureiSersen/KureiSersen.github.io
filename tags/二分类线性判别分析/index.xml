@@ -13,7 +13,7 @@
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/</link>
       <pubDate>Mon, 12 Feb 2024 22:09:36 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/</guid>
-      <description>特点 算法原理:&#xA;从几何的角度,找到一条穿过中心原点的投影线,让全体训练样本经过投影后:&#xA;异类样本的中心尽可能远 同类样本的方差尽可能小 模型推导: $$ 补充:2-范式:||x||2=(\sum\limits{i=1}^{N}|x_i|^2)^{\frac{1}{2}}就是在求向量的模长\ 设u_0、u_1分别是所有正样本、负样本在投影线上的投影中心\ 经过投影后,异类样本的中心尽可能远:max||w^Tu_0-w^Tu_1||{2}^{2}\ 经过投影后,同类样本的方差尽可能小:min\enspace w^T\sum\nolimits{0}w\ 那么联合两个式子,我们最终的损失函数就是:\ max\enspace J = \frac{||w^Tu_0-w^Tu_1||{2}^{2}}{w^T\sum\nolimits{0}w + w^T\sum\nolimits_{1}w} $$&#xA;适用范围 求解方法 拉格朗日乘数法 </description>
+      <description>特点 算法原理:&#xA;从几何的角度,找到一条穿过中心原点的投影线,让全体训练样本经过投影后:&#xA;异类样本的中心尽可能远 同类样本的方差尽可能小 LOSS函数推导：&#xA;设u_0、u_1分别是所有正样本、负样本在投影线上的投影中心,经过投影后,异类样本的中心尽可能远 $$ max||w^Tu_0-w^Tu_1||_{2}^{2} $$&#xA;经过投影后,同类样本的方差尽可能小 $$ min\enspace w^T\sum\nolimits_{0}w $$&#xA;联合两个式子,我们最终的损失函数就是 $$ max\enspace J =\frac{||w^Tu_0-w^Tu_1||_{2}^{2}}{w^T\sum\nolimits_{0}w + w^T\sum\nolimits_{1}w} $$&#xA;补充 2-范式:求向量的模长 $$ ||x||_2=(\sum\limits_{i=1}^{N}|x_i|^2)^{\frac{1}{2}} $$ 求解方法 拉格朗日乘数法 </description>
     </item>
   </channel>
 </rss>
