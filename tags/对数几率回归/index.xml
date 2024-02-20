@@ -13,7 +13,7 @@
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:11:30 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</guid>
-      <description>模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1+e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}&#xA;信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$&#xA;相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$&#xA;其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ </description>
+      <description>&lt;p&gt;$$&#xA;\frac{1}{1+e^{-x}}\&#xA;$$&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

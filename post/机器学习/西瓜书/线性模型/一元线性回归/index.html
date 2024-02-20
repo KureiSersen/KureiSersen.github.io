@@ -61,11 +61,9 @@
   
   
   
-  <meta name="description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
-在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 " />
+  <meta name="description" content="$$
+f(x) = wx &#43; b
+$$" />
   <meta name="author" content="Edwin.Liang" />
   
 
@@ -161,21 +159,17 @@
   
   
   <meta itemprop="name" content="一元线性回归">
-<meta itemprop="description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
-在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 "><meta itemprop="datePublished" content="2024-02-12T22:07:34+08:00" />
+<meta itemprop="description" content="$$
+f(x) = wx &#43; b
+$$"><meta itemprop="datePublished" content="2024-02-12T22:07:34+08:00" />
 <meta itemprop="dateModified" content="2024-02-12T22:07:34+08:00" />
-<meta itemprop="wordCount" content="39">
+<meta itemprop="wordCount" content="350">
 <meta itemprop="keywords" content="机器学习,线性模型,一元线性回归," />
   
   <meta property="og:title" content="一元线性回归" />
-<meta property="og:description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
-在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 " />
+<meta property="og:description" content="$$
+f(x) = wx &#43; b
+$$" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-02-12T22:07:34+08:00" />
@@ -184,11 +178,9 @@
 
   
   <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="一元线性回归"/>
-<meta name="twitter:description" content="特点 模型表达式： $$ f(x) = wx &#43; b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 &#43; b $$
-在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1&#43;w_2x_2&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 &#43;w_2x_2&#43;w_3x_3&#43;w_4x_4&#43;w_5x_5&#43;w_6x_6&#43;b $$
-此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 "/>
+<meta name="twitter:description" content="$$
+f(x) = wx &#43; b
+$$"/>
 
   
   
@@ -344,7 +336,10 @@
     
   </header>
 
-  <section><h3 id="特点">特点</h3>
+  <section><p>$$
+f(x) = wx + b
+$$</p>
+<h3 id="特点">特点</h3>
 <ol>
 <li>模型表达式：
 $$
@@ -391,8 +386,7 @@ $$</p>
 <ol>
 <li>最小二乘法估计</li>
 <li>极大似然估计</li>
-</ol>
-</section>
+</ol></section>
 
   
   

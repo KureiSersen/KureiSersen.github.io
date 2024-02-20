@@ -13,7 +13,7 @@
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:07:34 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</guid>
-      <description>特点 模型表达式： $$ f(x) = wx + b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 + b $$&#xA;在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1+w_2x_2+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 +w_2x_2+w_3x_3+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 +w_2x_2+w_3x_3+w_4x_4+w_5x_5+w_6x_6+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 </description>
+      <description>&lt;p&gt;$$&#xA;f(x) = wx + b&#xA;$$&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

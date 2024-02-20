@@ -61,10 +61,9 @@
   
   
   
-  <meta name="description" content="模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1&#43;e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}
-信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$
-相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$
-其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ " />
+  <meta name="description" content="$$
+\frac{1}{1&#43;e^{-x}}\
+$$" />
   <meta name="author" content="Edwin.Liang" />
   
 
@@ -160,19 +159,17 @@
   
   
   <meta itemprop="name" content="对数几率回归">
-<meta itemprop="description" content="模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1&#43;e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}
-信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$
-相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$
-其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ "><meta itemprop="datePublished" content="2024-02-12T22:11:30+08:00" />
+<meta itemprop="description" content="$$
+\frac{1}{1&#43;e^{-x}}\
+$$"><meta itemprop="datePublished" content="2024-02-12T22:11:30+08:00" />
 <meta itemprop="dateModified" content="2024-02-12T22:11:30+08:00" />
-<meta itemprop="wordCount" content="29">
+<meta itemprop="wordCount" content="273">
 <meta itemprop="keywords" content="机器学习,线性模型,对数几率回归," />
   
   <meta property="og:title" content="对数几率回归" />
-<meta property="og:description" content="模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1&#43;e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}
-信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$
-相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$
-其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ " />
+<meta property="og:description" content="$$
+\frac{1}{1&#43;e^{-x}}\
+$$" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-02-12T22:11:30+08:00" />
@@ -181,10 +178,9 @@
 
   
   <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="对数几率回归"/>
-<meta name="twitter:description" content="模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1&#43;e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}
-信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$
-相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$
-其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ "/>
+<meta name="twitter:description" content="$$
+\frac{1}{1&#43;e^{-x}}\
+$$"/>
 
   
   
@@ -340,7 +336,10 @@
     
   </header>
 
-  <section><h3 id="模型表达式">模型表达式</h3>
+  <section><p>$$
+\frac{1}{1+e^{-x}}\
+$$</p>
+<h3 id="模型表达式">模型表达式</h3>
 <ol>
 <li>$sigmoid$函数、激活函数、$s$型函数
 $$
@@ -373,8 +372,7 @@ $$
 $$</li>
 </ol>
 </li>
-</ol>
-</section>
+</ol></section>
 
   
   

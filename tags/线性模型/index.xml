@@ -13,28 +13,28 @@
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:11:30 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</guid>
-      <description>模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1+e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}&#xA;信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$&#xA;相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$&#xA;其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ </description>
+      <description>&lt;p&gt;$$&#xA;\frac{1}{1+e^{-x}}\&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>多元线性回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:10:37 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</guid>
-      <description>模型表达式 $$ f（x_i）=(w_1\enspace w_2 \enspace \cdots \enspace w_i)\begin{pmatrix} x_1 \newline x_2 \newline\vdots\newline x_i \end{pmatrix} + b $$&#xA;当然这个式子也可以通过化简b，从而写为 $$ f（x_i）=(w_1\enspace w_2 \enspace \cdots \enspace w_i\enspace w_b)\begin{pmatrix} x_1 \newline x_2 \newline\vdots\newline x_i \newline 1 \end{pmatrix} $$ 求解方法 最小二乘法估计 </description>
+      <description>&lt;p&gt;$$&#xA;f（x_i）=(w_1\enspace w_2 \enspace \cdots \enspace w_i)\begin{pmatrix}x_1 \newline x_2 \newline\vdots\newline x_i \end{pmatrix} + b&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>二分类线性判别分析</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/</link>
       <pubDate>Mon, 12 Feb 2024 22:09:36 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/</guid>
-      <description>特点 算法原理:&#xA;从几何的角度,找到一条穿过中心原点的投影线,让全体训练样本经过投影后:&#xA;异类样本的中心尽可能远 同类样本的方差尽可能小 LOSS函数推导：&#xA;设u_0、u_1分别是所有正样本、负样本在投影线上的投影中心,经过投影后,异类样本的中心尽可能远 $$ max||w^Tu_0-w^Tu_1||_{2}^{2} $$&#xA;经过投影后,同类样本的方差尽可能小 $$ min\enspace w^T\sum\nolimits_{0}w $$&#xA;联合两个式子,我们最终的损失函数就是 $$ max\enspace J =\frac{||w^Tu_0-w^Tu_1||_{2}^{2}}{w^T\sum\nolimits_{0}w + w^T\sum\nolimits_{1}w} $$&#xA;补充 2-范式:求向量的模长 $$ ||x||_2=(\sum\limits_{i=1}^{N}|x_i|^2)^{\frac{1}{2}} $$ 求解方法 拉格朗日乘数法 </description>
+      <description>&lt;p&gt;$$&#xA;max\enspace J =\frac{||w^Tu_0-w^Tu_1||_{2}^{2}}{w^T\sum\nolimits_{0}w + w^T\sum\nolimits_{1}w}&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>一元线性回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:07:34 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</guid>
-      <description>特点 模型表达式： $$ f(x) = wx + b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 + b $$&#xA;在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1+w_2x_2+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 +w_2x_2+w_3x_3+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 +w_2x_2+w_3x_3+w_4x_4+w_5x_5+w_6x_6+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 </description>
+      <description>&lt;p&gt;$$&#xA;f(x) = wx + b&#xA;$$&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -13,56 +13,56 @@
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/</link>
       <pubDate>Tue, 20 Feb 2024 12:56:07 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/</guid>
-      <description>目的 在ubuntu22.04LTS系统下搭建深度学习环境&#xA;涉及到的部分 Nvidia driver 根据显卡型号去nvidia下载地址下载驱动，得到.run文件 注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面&#xA;安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07&#xA;$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run Nvidia&#39;s 32-bit compatibility libraries?&#xA;都是64位系统，不需要32位的兼容库&#xA;NO Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up&#xA;x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动&#xA;YES 报错 &amp;ldquo;Building kernel modules&amp;rdquo; .See /var/log/nvidia-installer.log for details&#xA;去 /var/log/nvidia-installer.log 查报错，看到这一条 error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’</description>
+      <description>&lt;p&gt;在ubuntu22.04LTS系统下搭建深度学习环境&lt;/p&gt;</description>
     </item>
     <item>
       <title>对数几率回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:11:30 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</guid>
-      <description>模型表达式 $sigmoid$函数、激活函数、$s$型函数 $$ \frac{1}{1+e^{-x}}\ $$ 补充 信息论自信息概念：自信息的期望被称为信息熵，信息熵用来衡量变量的不确定性，变量越不确定，信息熵越大。自信息表达式： $$ I(x)=-log_b\enspace p(x) $$ {b=2时自信息的单位为bit,b=e时自信息的单位为nat}&#xA;信息熵表达式： $$ E(I(x))=-\sum\limits_{x}^{}p(x)log_b\enspace p(x) $$&#xA;相对熵，又称$KL$散度，可以用于衡量两个分布的差异。假设真实模型为$p(x)$，而我们求解得到的模型是$q(x)$，那么我们就可以用$p(x)$与$q(x)$的相对熵作为$LOSS$函数 $$ D_{KL}(p||q) =-\sum\limits_{x}^{}p(x)log_b\enspace p(x)-\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$&#xA;其中p(x)为常数,我们仅需使下述式子最小,即可获得最优模型 $$ -\sum\limits_{x}^{}p(x)log_b\enspace q(x) $$ </description>
+      <description>&lt;p&gt;$$&#xA;\frac{1}{1+e^{-x}}\&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>多元线性回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:10:37 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</guid>
-      <description>模型表达式 $$ f（x_i）=(w_1\enspace w_2 \enspace \cdots \enspace w_i)\begin{pmatrix} x_1 \newline x_2 \newline\vdots\newline x_i \end{pmatrix} + b $$&#xA;当然这个式子也可以通过化简b，从而写为 $$ f（x_i）=(w_1\enspace w_2 \enspace \cdots \enspace w_i\enspace w_b)\begin{pmatrix} x_1 \newline x_2 \newline\vdots\newline x_i \newline 1 \end{pmatrix} $$ 求解方法 最小二乘法估计 </description>
+      <description>&lt;p&gt;$$&#xA;f（x_i）=(w_1\enspace w_2 \enspace \cdots \enspace w_i)\begin{pmatrix}x_1 \newline x_2 \newline\vdots\newline x_i \end{pmatrix} + b&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>二分类线性判别分析</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/</link>
       <pubDate>Mon, 12 Feb 2024 22:09:36 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%BA%8C%E5%88%86%E7%B1%BB%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90/</guid>
-      <description>特点 算法原理:&#xA;从几何的角度,找到一条穿过中心原点的投影线,让全体训练样本经过投影后:&#xA;异类样本的中心尽可能远 同类样本的方差尽可能小 LOSS函数推导：&#xA;设u_0、u_1分别是所有正样本、负样本在投影线上的投影中心,经过投影后,异类样本的中心尽可能远 $$ max||w^Tu_0-w^Tu_1||_{2}^{2} $$&#xA;经过投影后,同类样本的方差尽可能小 $$ min\enspace w^T\sum\nolimits_{0}w $$&#xA;联合两个式子,我们最终的损失函数就是 $$ max\enspace J =\frac{||w^Tu_0-w^Tu_1||_{2}^{2}}{w^T\sum\nolimits_{0}w + w^T\sum\nolimits_{1}w} $$&#xA;补充 2-范式:求向量的模长 $$ ||x||_2=(\sum\limits_{i=1}^{N}|x_i|^2)^{\frac{1}{2}} $$ 求解方法 拉格朗日乘数法 </description>
+      <description>&lt;p&gt;$$&#xA;max\enspace J =\frac{||w^Tu_0-w^Tu_1||_{2}^{2}}{w^T\sum\nolimits_{0}w + w^T\sum\nolimits_{1}w}&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>一元线性回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
       <pubDate>Mon, 12 Feb 2024 22:07:34 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</guid>
-      <description>特点 模型表达式： $$ f(x) = wx + b $$ 适用范围 求解数据具有连续的特征，比如身高从低到高，此时应使用 $$ f(x) = w_1 x_1 + b $$&#xA;在上式基础上加入二值离散特征【颜值】（美：1，丑：0） $$ f(x)=w_1x_1+w_2x_2+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$​表示颜值 在上式的基础上加入有序的多值离散特征【饭量】（小：1，中：2，大：3） $$ f(x)=w_1x_1 +w_2x_2+w_3x_3+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量 在上式的基础上加入无序的多值离散特征【肤色】（黄：[1,0,0]，黑：[0,1,0]，白：[0,0,1]） $$ f(x)=w_1x_1 +w_2x_2+w_3x_3+w_4x_4+w_5x_5+w_6x_6+b $$&#xA;此时$w_1x_1$项表示身高，$w_2x_2$表示颜值，$w_3x_3$表示饭量。当肤色为黄色时，$x_4$，$x_5$，$x_6$代入值[1,0,0] 求解方法 最小二乘法估计 极大似然估计 </description>
+      <description>&lt;p&gt;$$&#xA;f(x) = wx + b&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>神经网络</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</link>
       <pubDate>Mon, 12 Feb 2024 22:06:08 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</guid>
-      <description>特点 M-P神经元&#xA;定义：接受$n$个输入，这些输入通常是来自其他神经元，并给哥个输入赋予权重计算加权和，然后和自身特有的阈值，做减法进行比较，最后经过激活函数，模拟抑制和激活的过程，处理之后输出&#xA;模型表达式： $$ y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx+b) $$&#xA;分类：&#xA;单个$M-P$神经元：使用$sgn$、$sigmoid$作为激活函数，即为感知机 多个$M-P$神经元：神经网络 感知机&#xA;模型表达式：&#xA;$sgn$​阶跃函数型感知机 $$ y=sgn(w^Tx-\theta)= \left\{ \begin{aligned} 1 &amp;amp;,&amp;amp; w^Tx-\theta \geq0 \newline 0 &amp;amp;,&amp;amp; w^Tx-\theta &amp;lt;0\newline \end{aligned} \right. $$&#xA;sigmoid对数几率函数型感知机 $$ y=sigmoid(w^Tx-\theta)=\left\{ \begin{aligned} 1 &amp;amp;,&amp;amp; w^Tx-\theta \geq0 \newline 0 &amp;amp;,&amp;amp; w^Tx-\theta &amp;lt;0\newline \end{aligned} \right. $$&#xA;几何角度解释：&#xA;给定一个线性可分的数据集$T$，感知机的学习目标是求得能对数据集T中的福样本完全正确划分的超平面，其中$w^T-\theta$为超平面方程 超平面方程不唯一 法向量$w$垂直于超平面 法向量$w$和位移项$\theta$确定一个唯一的超平面 法向量$w$指向的那一半空间为证空间，另一半为负空间 求解策略：&#xA;将全体训练样本带入模型中找出误分类样本，此时误分类样本有且仅有两种可能&#xA;$w^Tx-\theta \geq0$ ,模型输出为$y&amp;rsquo;=1$,样本正确输出应该为$y=0$&#xA;$w^Tx-\theta \leq0$ ,模型输出为$y&amp;rsquo;=0$,样本正确输出应该为$y=1$&#xA;因此可以得到恒等式 $$ (y&amp;rsquo;-y)(w^Tx-\theta)\geq0 $$&#xA;所以给定的数据集T，损失函数可以定义为&#xA;$$ L(w,\theta)=\sum\limits_{}^{}(y&amp;rsquo;-y)(w^Tx-\theta) $$&#xA;显然，此损失函数是非负的，如果没有误分类点，损失函数值是$0$。而且误分类点越少，误分类点离超平面越近，损失函数值就越小。 神经网络&#xA;适用范围 求解方法 </description>
+      <description>&lt;p&gt;$$&#xA;y=f(\sum\limits_{i=1}^{n}w_ix_i-\theta)=f(w^Tx+b)&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>决策树</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%86%B3%E7%AD%96%E6%A0%91/</link>
       <pubDate>Mon, 12 Feb 2024 21:47:11 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%86%B3%E7%AD%96%E6%A0%91/</guid>
-      <description>特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 在对数几率回归中我们了解了自信息、信息熵，下面引入一个新的概念，纯度。&#xA;纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映&#xA;条件熵定义：&#xA;假设现有关于变量$a$的集合$D$，计为$a\in{a^1,a^2,a^3&amp;hellip;a^n}$ $D^v$表示当满足条件$v$时，变量$a$的集合，计为$a\in{a^1,a^2,a^3&amp;hellip;a^n}$​ $\frac{|D^v|}{D}$表示满足条件的$a$集合$D^v$，在所有$a$​变量集合中的占比 那么满足条件$v$后，集合$D$的条件熵计为$\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)$ 信息增益定义：&#xA;在满足条件v后，变量a取值不确定的减少量，也即纯度的提升 $$ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$ 模型种类 $ID3$决策树&#xA;模型表达式： $$ a_*=arg\enspace max\enspace Gain(D,a) $$&#xA;模型缺陷：&#xA;信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 $C4.5$决策树&#xA;模型由来：&#xA;为解决$ID3$模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)} $$&#xA;其中$IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}$，称为$a$的固有值 $a$的取值个数$V$越大，通常$IV(a)$​越大 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 改善后的模型思路：&#xA;先基于$ID3$模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性 $CART$决策树&#xA;模型由来：&#xA;有别于$ID3$的思路，引入新概念基尼值用于衡量纯度 基尼值定义：&#xA;从集合$D$​中随机抽取两个样本，其类别标记不一致的概率。&#xA;因此，基尼值越小，碰到异类的概率越小，纯度越高。 $$ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&amp;rsquo;\newline =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\newline =1-\sum\limits_{k=1}^{|y|}p_k^2 $$&#xA;类比信息熵和条件熵，我们得出在条件$v$​下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$&#xA;模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$&#xA;实际构造算法：&#xA;基于每个属性$a$的每个可能取值$v$，将数据集$D$分为$a=v$和$a\neq v$​两部分计算基尼值 $$ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) + \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$</description>
+      <description>&lt;p&gt;$$&#xA;Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) + \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v})&#xA;$$&lt;/p&gt;</description>
     </item>
     <item>
       <title>导论</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%AF%BC%E8%AE%BA/</link>
       <pubDate>Mon, 12 Feb 2024 21:43:13 +0800</pubDate>
       <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%AF%BC%E8%AE%BA/</guid>
-      <description>独立同分布 独立（Independent）：这意味着每个样本的获取不受其他样本的影响。换句话说，每个数据点是独立抽取的，一个数据点的特征或结果不会影响其他数据点。 同分布（Identically Distributed）：这表明所有样本都来自同一个概率分布。无论样本是在数据集的哪个位置（例如，数据集的开始、中间或结束），它们都应该具有相同的分布特性。 例子说明： 假设我们有一个用于预测房价的机器学习模型，我们从多个城市收集了数据作为训练集。在这个例子中：&#xA;独立性：每一个房屋数据（例如，面积、位置、卧室数量等）都是独立收集的，不受其他房屋数据的影响。即一个房屋的特征和价格不会影响或决定另一个房屋的特征和价格。 同分布性：我们假设所有的数据都来自同一个“房价分布”。这意味着无论这些数据是从纽约还是洛杉矶收集的，它们都遵循相同的分布规律。例如，面积和房价之间的关系在整个数据集中是一致的。 现实世界的挑战： 在实际应用中，$i.i.d.$假设往往不完全成立。例如，如果我们的训练数据主要来自小城市，但我们的模型被用来预测大城市的房价，那么这个假设可能被违反。大城市的房价可能受到不同的影响因素，或者这些影响因素与小城市的影响因素不同。这种情况下，模型可能无法准确预测大城市的房价，因为训练数据和预测数据不是同分布的。&#xA;因此，在实践中，重要的是要识别和理解何时这个假设可能不成立，并考虑如何调整模型或数据以应对这种情况。&#xA;确定合适的假设空间 假设空间（支持向量机、线性回归、决策树、神经网络都是假设空间）&#xA;在机器学习中，确定最适合的假设空间是一个关键步骤，因为它直接影响模型的性能和适用性。假设空间指的是模型可以考虑的所有可能的假设或函数集合。选择适当的假设空间需要考虑以下几个关键因素：&#xA;问题的性质：您的问题是分类、回归还是其他类型的问题？不同类型的问题可能需要不同的假设空间。例如，分类问题常用的假设空间包括决策树、神经网络等，而回归问题可能会使用线性回归、支持向量机等。&#xA;数据的特性：数据的量、质和类型（如连续、分类、时间序列等）会影响适合的假设空间。大数据集可能需要更复杂的模型来捕捉细微的模式，而小数据集则可能更适合简单模型以避免过拟合。&#xA;可解释性：某些应用场景需要模型具有较高的可解释性。例如，在医疗或金融领域，理解模型的决策过程很重要。在这些情况下，可能会偏向于选择更简单、更透明的模型。&#xA;计算资源：一些模型（如深度学习模型）需要大量的计算资源。如果资源有限，您可能需要选择更节省资源的模型。&#xA;性能要求：对于性能要求极高的应用，可能需要选择更复杂、计算密集的模型来达到最佳性能。&#xA;历史数据和先验知识：如果有关于问题的历史数据或领域专家的先验知识，可以利用这些信息来指导假设空间的选择。&#xA;实验和验证：最后，通过实验和交叉验证等技术，您可以比较不同假设空间下的模型性能，以找到最适合的选择。&#xA;在实践中，选择假设空间通常需要权衡这些因素，并可能需要通过实验和迭代来找到最佳解决方案。此外，可以通过特征工程、超参数调整等方法来进一步优化选定的假设空间。&#xA;机器学习三要素 模型：根据具体问题，确定假设空间（线性模型、深度模型等） 策略：根据评价标准，确定选取最有模型的策略，这一步骤要确定$LOSS$函数 算法：求解损失函数，确定最优模型 为什么机器学习被深度学习取代 因为用深度学习在大部分场景能秒杀机器学习方法 </description>
+      <description>&lt;h4 id=&#34;为什么机器学习被深度学习取代&#34;&gt;为什么机器学习被深度学习取代&lt;/h4&gt;&#xA;&lt;p&gt;因为用深度学习在大部分场景能秒杀机器学习&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
