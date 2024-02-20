@@ -104,6 +104,12 @@ YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.
 
   
   
+  <script
+    defer
+    src="https://kureisersen.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
 
   
   
@@ -360,7 +366,7 @@ YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.
 <h3 id="nvidia-driver">Nvidia driver</h3>
 <ol>
 <li>
-<p>根据显卡型号去nvidia<a href="https://www.nvidia.com/download/index.aspx">下载地址</a>下载驱动，得到.run文件 <strong>注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面</strong></p>
+<p>根据显卡型号去nvidia<mark><a href="https://www.nvidia.com/download/index.aspx">下载地址</a></mark>下载驱动，得到.run文件 <strong>注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面</strong></p>
 <p><img src="/image-20240220144653252.png" alt="image-20240220144653252"></p>
 </li>
 <li>
@@ -369,8 +375,6 @@ YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.
 </span></span></code></pre></div><ol>
 <li>
 <p><strong>Nvidia's 32-bit compatibility libraries?</strong></p>
-</li>
-<li>
 <p>都是64位系统，不需要32位的兼容库</p>
 <pre tabindex="0"><code>NO
 </code></pre></li>
@@ -443,7 +447,7 @@ YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.
 <h3 id="cuda-toolkit">CUDA Toolkit</h3>
 <ol>
 <li>
-<p>根据显卡驱动版本去找对应的CUDA版本，比如<code>550.40.07</code>驱动支持的CUDA版本截止安装驱动日期最高是<code>12.3</code>，所以先去nvidia CUDA<a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=runfile_local">下载地址</a>拿到CUDA Toolkit的run file</p>
+<p>根据显卡驱动版本去找对应的CUDA版本，比如<code>550.40.07</code>驱动支持的CUDA版本截止安装驱动日期最高是<code>12.3</code>，所以先去nvidia CUDA<mark><a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=runfile_local">下载地址</a></mark>拿到CUDA Toolkit的run file</p>
 <p><img src="/image-20240220161345183.png" alt="image-20240220161345183"></p>
 </li>
 <li>
