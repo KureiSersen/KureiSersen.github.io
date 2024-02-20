@@ -62,8 +62,14 @@
   
   
   <meta name="description" content="目的 在ubuntu22.04LTS系统下搭建深度学习环境
-涉及到的部分 Nvidia driver 下载地址
-CUDA Toolkit pytorch " />
+涉及到的部分 Nvidia driver 根据显卡型号去nvidia下载地址下载驱动，得到.run文件 注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面
+安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07
+$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run Nvidia&#39;s 32-bit compatibility libraries?
+都是64位系统，不需要32位的兼容库
+NO Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up
+x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动
+YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.log for details
+去 /var/log/nvidia-installer.log 查报错，看到这一条 error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’" />
   <meta name="author" content="Edwin.Liang" />
   
 
@@ -154,16 +160,28 @@ CUDA Toolkit pytorch " />
   
   <meta itemprop="name" content="Nvidia环境">
 <meta itemprop="description" content="目的 在ubuntu22.04LTS系统下搭建深度学习环境
-涉及到的部分 Nvidia driver 下载地址
-CUDA Toolkit pytorch "><meta itemprop="datePublished" content="2024-02-20T12:56:07+08:00" />
+涉及到的部分 Nvidia driver 根据显卡型号去nvidia下载地址下载驱动，得到.run文件 注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面
+安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07
+$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run Nvidia&#39;s 32-bit compatibility libraries?
+都是64位系统，不需要32位的兼容库
+NO Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up
+x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动
+YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.log for details
+去 /var/log/nvidia-installer.log 查报错，看到这一条 error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’"><meta itemprop="datePublished" content="2024-02-20T12:56:07+08:00" />
 <meta itemprop="dateModified" content="2024-02-20T12:56:07+08:00" />
-<meta itemprop="wordCount" content="9">
-<meta itemprop="keywords" content="ubuntu,nvidia," />
+<meta itemprop="wordCount" content="198">
+<meta itemprop="keywords" content="ubuntu,nvidia,机器学习," />
   
   <meta property="og:title" content="Nvidia环境" />
 <meta property="og:description" content="目的 在ubuntu22.04LTS系统下搭建深度学习环境
-涉及到的部分 Nvidia driver 下载地址
-CUDA Toolkit pytorch " />
+涉及到的部分 Nvidia driver 根据显卡型号去nvidia下载地址下载驱动，得到.run文件 注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面
+安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07
+$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run Nvidia&#39;s 32-bit compatibility libraries?
+都是64位系统，不需要32位的兼容库
+NO Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up
+x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动
+YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.log for details
+去 /var/log/nvidia-installer.log 查报错，看到这一条 error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-02-20T12:56:07+08:00" />
@@ -173,8 +191,14 @@ CUDA Toolkit pytorch " />
   
   <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Nvidia环境"/>
 <meta name="twitter:description" content="目的 在ubuntu22.04LTS系统下搭建深度学习环境
-涉及到的部分 Nvidia driver 下载地址
-CUDA Toolkit pytorch "/>
+涉及到的部分 Nvidia driver 根据显卡型号去nvidia下载地址下载驱动，得到.run文件 注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面
+安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07
+$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run Nvidia&#39;s 32-bit compatibility libraries?
+都是64位系统，不需要32位的兼容库
+NO Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up
+x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动
+YES 报错 &ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.log for details
+去 /var/log/nvidia-installer.log 查报错，看到这一条 error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’"/>
 
   
   
@@ -310,6 +334,7 @@ CUDA Toolkit pytorch "/>
     >
       
 
+
 <article>
   <header class="mb-16">
     <h1 class="!my-0 pb-2.5">Nvidia环境</h1>
@@ -335,13 +360,125 @@ CUDA Toolkit pytorch "/>
 <h3 id="nvidia-driver">Nvidia driver</h3>
 <ol>
 <li>
-<p><a href="https://www.nvidia.com/download/index.aspx">下载地址</a></p>
-<p><img src="../../../../static/image-20240220132429088.png" alt="image-20240220132429088"></p>
+<p>根据显卡型号去nvidia<a href="https://www.nvidia.com/download/index.aspx">下载地址</a>下载驱动，得到.run文件 <strong>注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面</strong></p>
+<p><img src="/image-20240220144653252.png" alt="image-20240220144653252"></p>
 </li>
-<li></li>
+<li>
+<p>安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run
+</span></span></code></pre></div><ol>
+<li>
+<p><strong>Nvidia's 32-bit compatibility libraries?</strong></p>
+</li>
+<li>
+<p>都是64位系统，不需要32位的兼容库</p>
+<pre tabindex="0"><code>NO
+</code></pre></li>
+<li>
+<p><strong>Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up</strong></p>
+<p>x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动</p>
+<pre tabindex="0"><code>YES 
+</code></pre></li>
+<li>
+<p>报错 <strong>&ldquo;Building kernel modules&rdquo; .See /var/log/nvidia-installer.log for details</strong></p>
+<ol>
+<li>
+<p>去 <strong>/var/log/nvidia-installer.log</strong> 查报错，看到这一条 <strong>error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’</strong></p>
+</li>
+<li>
+<p>经过搜索疑似是gcc版本的问题，ubuntu22.04安装的gcc版本是gcc-11，查询到网上大部分同类型错误可以通过把gcc升级到gcc-12来解决。为什么是疑似，因为在反复的安装卸载驱动过程中，我曾经侥幸在gcc-11的环境下安装成功，但是未往下深究为什么会安装成功，这里为了方便起见，不管他，先挖个坑。</p>
+</li>
+<li>
+<p>接下来安装gcc-12,但是仅安装gcc-12在后续的验证过程中是行不通的，原因是nvidia driver引用的gcc是一个软连接，目录在<code>/usr/bin/gcc</code>，实际指向的是gcc-11这个老版本，因此我们在安装gcc-12之后，还要把<code>/usr/bin/gcc</code>指向gcc-12，这里会用到一个环境版本管理工具<code>update-alternatives</code>，关于<code>update-alternatives</code>的使用教程这里就不展开了，下面展示一下正确的姿势。</p>
+<ol>
+<li>
+<p>先查看一下gcc在<code>update-alternatives</code>里面有没有被配置过软链接,正常的情况下应该是没有配置过</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ update-alternatives --display gcc
+</span></span></code></pre></div></li>
+<li>
+<p>没有配置的话先把gcc-11这个老版本配置一下，这里最后一个参数110是优先级，可以随便写数字，这里按照常规做法，把版本号乘10记做优先级数字</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 <span style="color:#ae81ff">110</span>
+</span></span></code></pre></div></li>
+<li>
+<p>然后别忘了把g++也配置一下，这两个东西的区别在这里就不展开了，有gcc必然有g++</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 <span style="color:#ae81ff">110</span>
+</span></span></code></pre></div></li>
+<li>
+<p>这个时候可以在调用一下<code>update-alternatives --display gcc</code>这个命令，可以看到我们刚刚配置的结果，检查一下</p>
+</li>
+<li>
+<p>安装一下gcc-12、g++-12</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo apt install gcc-12 g++-12
+</span></span></code></pre></div></li>
+<li>
+<p>继续配置新安装的gcc-12、g++-12</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 <span style="color:#ae81ff">120</span>
+</span></span><span style="display:flex;"><span>$ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 <span style="color:#ae81ff">120</span>
+</span></span></code></pre></div></li>
+<li>
+<p>配置完之后可以再次<code>update-alternatives --display gcc</code>，这个时候应该可以看到链接已经指向gcc-12了，因为gcc-12的优先级是120，大于老版本110，并且有下面这样的文字输出</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ update-alternatives --display gcc
+</span></span><span style="display:flex;"><span>gcc - 自动模式
+</span></span><span style="display:flex;"><span>link best version is /usr/bin/gcc-12
+</span></span><span style="display:flex;"><span>链接目前指向 /usr/bin/gcc-12
+</span></span><span style="display:flex;"><span>link gcc is /usr/bin/gcc
+</span></span></code></pre></div></li>
+<li>
+<p>然后再运行一下nvidia driver的安装程序就不会报相同的错误了</p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>安装成功之后运行一下<code>nvidia-smi</code>，正常显示就说明驱动没有问题了，这时候的run file文件先别急着删，后面有可能还会用到。</p>
+</li>
+<li>
+<p>如果你通过run file安装了nvidia driver，之后因为种种特殊的原因想要卸载怎么办，这时候就用到了原先没有删除的run file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run --unistall
+</span></span></code></pre></div></li>
 </ol>
 <h3 id="cuda-toolkit">CUDA Toolkit</h3>
+<ol>
+<li>
+<p>根据显卡驱动版本去找对应的CUDA版本，比如<code>550.40.07</code>驱动支持的CUDA版本截止安装驱动日期最高是<code>12.3</code>，所以先去nvidia CUDA<a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=runfile_local">下载地址</a>拿到CUDA Toolkit的run file</p>
+<p><img src="/image-20240220161345183.png" alt="image-20240220161345183"></p>
+</li>
+<li>
+<p>安装CUDA</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ sudo ./cuda_12.3.2_545.23.08_linux.run
+</span></span></code></pre></div></li>
+<li>
+<p>cuda本身自带一个比较老版本的nvidia driver，因为我们已经安装过nvidia driver了，所以这里用回车把他点掉，要不然会报错，其他的选项不用管，直接选中<code>Install</code>安装，这次安装比较丝滑，没有遇到任何问题，所以没有来得及截图，下面这张图是网图，但是样式是一样。</p>
+<p><img src="/image-20240220165701224.png" alt="image-20240220165701224"></p>
+</li>
+<li>
+<p>安装完之后运行<code>nvcc --version</code>，诶这时候你发现，怎么没反应，为什么找不到命令，这是因为nvcc没有变成全局命令，运行下面的命令会有反应</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ /usr/local/cuda/bin/nvcc --version
+</span></span></code></pre></div></li>
+</ol>
 <h3 id="pytorch">pytorch</h3>
+<ol>
+<li>
+<p>pytorch相对就简单很多了，直接找到pytorch官网<a href="https://pytorch.org/get-started/locally/">下载地址</a>，复制<code>pip3</code>命令执行</p>
+<p><img src="/image-20240220170145157.png" alt="image-20240220170145157"></p>
+</li>
+<li>
+<p><code>pip3</code>命令运行之前建议开科学上网，要不然很慢，安装之后，建议运行一下<code>nvidia-smi</code>，看看nvidia driver有没有因为未知原因被顶掉，我安装的时候被顶掉了，不得已重新卸载了nvidia driver又重新安装了一遍，如果<code>nvidia-smi</code>正常显示那么没问题</p>
+</li>
+<li>
+<p>运行<code>python</code>命令看看pytorch能不能找到显卡，如果能找到说明整体安装成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch <span style="color:#f92672">import</span> nn
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>is_available()) <span style="color:#75715e"># true 查看GPU是否可用</span>
+</span></span><span style="display:flex;"><span>print(torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>device_count()) <span style="color:#75715e">#GPU数量， 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>get_device_name(torch<span style="color:#f92672">.</span>cuda<span style="color:#f92672">.</span>current_device())) <span style="color:#75715e">#输出GPU名称</span>
+</span></span></code></pre></div></li>
+</ol>
 </section>
 
   
@@ -351,9 +488,12 @@ CUDA Toolkit pytorch "/>
     <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/ubuntu">ubuntu</a>
      
     <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/nvidia">nvidia</a>
+     
+    <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
     
   </footer>
   
+
 
   
   
@@ -380,6 +520,7 @@ CUDA Toolkit pytorch "/>
 
   
 </article>
+
 <aside>
   <nav id="TableOfContents">
   <ul>
@@ -395,26 +536,16 @@ CUDA Toolkit pytorch "/>
 </nav>
 </aside>
 
+
     </main>
 
-    <footer
-  class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
->
+    <footer class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
   <div class="mr-auto">
-    &copy; 2024
-    <a class="link" href="https://kureisersen.github.io/">KureiSersen site</a>
+    
   </div>
-  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >Powered by Hugo️️</a
-  >️
-  <a
-    class="link"
-    href="https://github.com/nanxiaobei/hugo-paper"
-    rel="noopener"
-    target="_blank"
-    >✎ Paper</a
-  >
+  <a class="link" href="https://kureisersen.github.io/"> &copy; 2024KureiSersen site</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a>️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">✎ Paper</a>
 </footer>
-
   </body>
 </html>

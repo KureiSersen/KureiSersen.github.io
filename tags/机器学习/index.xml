@@ -6,8 +6,15 @@
     <description>Recent content in 机器学习 on KureiSersen site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Feb 2024 22:11:30 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Feb 2024 12:56:07 +0800</lastBuildDate>
     <atom:link href="https://kureisersen.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nvidia环境</title>
+      <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Tue, 20 Feb 2024 12:56:07 +0800</pubDate>
+      <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/</guid>
+      <description>目的 在ubuntu22.04LTS系统下搭建深度学习环境&#xA;涉及到的部分 Nvidia driver 根据显卡型号去nvidia下载地址下载驱动，得到.run文件 注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面&#xA;安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07&#xA;$ sudo ./NVIDIA-Linux-x86_64-xxx.xx.run Nvidia&#39;s 32-bit compatibility libraries?&#xA;都是64位系统，不需要32位的兼容库&#xA;NO Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up&#xA;x window system指的是linux GUI，这里需要让驱动自行配置,等重启电脑之后，自动启用最新安装的驱动&#xA;YES 报错 &amp;ldquo;Building kernel modules&amp;rdquo; .See /var/log/nvidia-installer.log for details&#xA;去 /var/log/nvidia-installer.log 查报错，看到这一条 error: unrecognized command line option ‘-ftrivial-auto-var-init=zero’</description>
+    </item>
     <item>
       <title>对数几率回归</title>
       <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92/</link>
