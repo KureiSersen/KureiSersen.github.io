@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nvidia on KureiSersen site</title>
+    <link>https://kureisersen.github.io/tags/nvidia/</link>
+    <description>Recent content in nvidia on KureiSersen site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 20 Feb 2024 12:56:07 +0800</lastBuildDate>
+    <atom:link href="https://kureisersen.github.io/tags/nvidia/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Nvidia环境</title>
+      <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Tue, 20 Feb 2024 12:56:07 +0800</pubDate>
+      <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83/nvidia%E7%8E%AF%E5%A2%83/</guid>
+      <description>目的 在ubuntu22.04LTS系统下搭建深度学习环境&#xA;涉及到的部分 Nvidia driver 下载地址&#xA;CUDA Toolkit pytorch </description>
+    </item>
+  </channel>
+</rss>

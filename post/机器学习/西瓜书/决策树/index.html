@@ -61,26 +61,26 @@
   
   
   
-  <meta name="description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 详见对数几率回归中的自信息、信息熵
+  <meta name="description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 在对数几率回归中我们了解了自信息、信息熵，下面引入一个新的概念，纯度。
 纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
-条件熵
-$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-ID3决策树
-补充:
-模型表达式：
-$$ a_*=arg\enspace max\enspace Gain(D,a) $$
+条件熵定义：
+假设现有关于变量$a$的集合$D$，计为$a\in{a^1,a^2,a^3&hellip;a^n}$ $D^v$表示当满足条件$v$时，变量$a$的集合，计为$a\in{a^1,a^2,a^3&hellip;a^n}$​ $\frac{|D^v|}{D}$表示满足条件的$a$集合$D^v$，在所有$a$​变量集合中的占比 那么满足条件$v$后，集合$D$的条件熵计为$\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)$ 信息增益定义：
+在满足条件v后，变量a取值不确定的减少量，也即纯度的提升 $$ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$ 模型种类 $ID3$决策树
+模型表达式： $$ a_*=arg\enspace max\enspace Gain(D,a) $$
 模型缺陷：
-信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 $C4.5$决策树
 模型由来：
-为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
-改善后的模型思路：
-先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
-有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
-类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+为解决$ID3$模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)} $$
+其中$IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}$，称为$a$的固有值 $a$的取值个数$V$越大，通常$IV(a)$​越大 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 改善后的模型思路：
+先基于$ID3$模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性 $CART$决策树
+模型由来：
+有别于$ID3$的思路，引入新概念基尼值用于衡量纯度 基尼值定义：
+从集合$D$​中随机抽取两个样本，其类别标记不一致的概率。
+因此，基尼值越小，碰到异类的概率越小，纯度越高。 $$ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\newline =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\newline =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件$v$​下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
 模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
-实际构造算法： $$
-基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2." />
+实际构造算法：
+基于每个属性$a$的每个可能取值$v$，将数据集$D$分为$a=v$和$a\neq v$​两部分计算基尼值 $$ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$" />
   <meta name="author" content="Edwin.Liang" />
   
 
@@ -170,51 +170,51 @@ $$ a_*=arg\enspace max\enspace Gain(D,a) $$
   
   
   <meta itemprop="name" content="决策树">
-<meta itemprop="description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 详见对数几率回归中的自信息、信息熵
+<meta itemprop="description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 在对数几率回归中我们了解了自信息、信息熵，下面引入一个新的概念，纯度。
 纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
-条件熵
-$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-ID3决策树
-补充:
-模型表达式：
-$$ a_*=arg\enspace max\enspace Gain(D,a) $$
+条件熵定义：
+假设现有关于变量$a$的集合$D$，计为$a\in{a^1,a^2,a^3&hellip;a^n}$ $D^v$表示当满足条件$v$时，变量$a$的集合，计为$a\in{a^1,a^2,a^3&hellip;a^n}$​ $\frac{|D^v|}{D}$表示满足条件的$a$集合$D^v$，在所有$a$​变量集合中的占比 那么满足条件$v$后，集合$D$的条件熵计为$\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)$ 信息增益定义：
+在满足条件v后，变量a取值不确定的减少量，也即纯度的提升 $$ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$ 模型种类 $ID3$决策树
+模型表达式： $$ a_*=arg\enspace max\enspace Gain(D,a) $$
 模型缺陷：
-信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 $C4.5$决策树
 模型由来：
-为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
-改善后的模型思路：
-先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
-有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
-类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+为解决$ID3$模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)} $$
+其中$IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}$，称为$a$的固有值 $a$的取值个数$V$越大，通常$IV(a)$​越大 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 改善后的模型思路：
+先基于$ID3$模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性 $CART$决策树
+模型由来：
+有别于$ID3$的思路，引入新概念基尼值用于衡量纯度 基尼值定义：
+从集合$D$​中随机抽取两个样本，其类别标记不一致的概率。
+因此，基尼值越小，碰到异类的概率越小，纯度越高。 $$ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\newline =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\newline =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件$v$​下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
 模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
-实际构造算法： $$
-基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2."><meta itemprop="datePublished" content="2024-02-12T21:47:11+08:00" />
+实际构造算法：
+基于每个属性$a$的每个可能取值$v$，将数据集$D$分为$a=v$和$a\neq v$​两部分计算基尼值 $$ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$"><meta itemprop="datePublished" content="2024-02-12T21:47:11+08:00" />
 <meta itemprop="dateModified" content="2024-02-12T21:47:11+08:00" />
-<meta itemprop="wordCount" content="88">
+<meta itemprop="wordCount" content="80">
 <meta itemprop="keywords" content="机器学习,决策树," />
   
   <meta property="og:title" content="决策树" />
-<meta property="og:description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 详见对数几率回归中的自信息、信息熵
+<meta property="og:description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 在对数几率回归中我们了解了自信息、信息熵，下面引入一个新的概念，纯度。
 纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
-条件熵
-$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-ID3决策树
-补充:
-模型表达式：
-$$ a_*=arg\enspace max\enspace Gain(D,a) $$
+条件熵定义：
+假设现有关于变量$a$的集合$D$，计为$a\in{a^1,a^2,a^3&hellip;a^n}$ $D^v$表示当满足条件$v$时，变量$a$的集合，计为$a\in{a^1,a^2,a^3&hellip;a^n}$​ $\frac{|D^v|}{D}$表示满足条件的$a$集合$D^v$，在所有$a$​变量集合中的占比 那么满足条件$v$后，集合$D$的条件熵计为$\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)$ 信息增益定义：
+在满足条件v后，变量a取值不确定的减少量，也即纯度的提升 $$ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$ 模型种类 $ID3$决策树
+模型表达式： $$ a_*=arg\enspace max\enspace Gain(D,a) $$
 模型缺陷：
-信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 $C4.5$决策树
 模型由来：
-为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
-改善后的模型思路：
-先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
-有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
-类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+为解决$ID3$模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)} $$
+其中$IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}$，称为$a$的固有值 $a$的取值个数$V$越大，通常$IV(a)$​越大 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 改善后的模型思路：
+先基于$ID3$模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性 $CART$决策树
+模型由来：
+有别于$ID3$的思路，引入新概念基尼值用于衡量纯度 基尼值定义：
+从集合$D$​中随机抽取两个样本，其类别标记不一致的概率。
+因此，基尼值越小，碰到异类的概率越小，纯度越高。 $$ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\newline =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\newline =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件$v$​下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
 模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
-实际构造算法： $$
-基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2." />
+实际构造算法：
+基于每个属性$a$的每个可能取值$v$，将数据集$D$分为$a=v$和$a\neq v$​两部分计算基尼值 $$ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%A5%BF%E7%93%9C%E4%B9%A6/%E5%86%B3%E7%AD%96%E6%A0%91/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-02-12T21:47:11+08:00" />
@@ -223,26 +223,26 @@ $$ a_*=arg\enspace max\enspace Gain(D,a) $$
 
   
   <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="决策树"/>
-<meta name="twitter:description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 详见对数几率回归中的自信息、信息熵
+<meta name="twitter:description" content="特点 算法原理 从逻辑角度,一堆$if \enspace else$语句的组合 从几何角度,根据某种准则划分特征空间 最终目的:将样本越分越纯 补充 在对数几率回归中我们了解了自信息、信息熵，下面引入一个新的概念，纯度。
 纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映
-条件熵
-$$ 假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\ D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\ \frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\ 那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-信息增益 $$ 在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$
-ID3决策树
-补充:
-模型表达式：
-$$ a_*=arg\enspace max\enspace Gain(D,a) $$
+条件熵定义：
+假设现有关于变量$a$的集合$D$，计为$a\in{a^1,a^2,a^3&hellip;a^n}$ $D^v$表示当满足条件$v$时，变量$a$的集合，计为$a\in{a^1,a^2,a^3&hellip;a^n}$​ $\frac{|D^v|}{D}$表示满足条件的$a$集合$D^v$，在所有$a$​变量集合中的占比 那么满足条件$v$后，集合$D$的条件熵计为$\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)$ 信息增益定义：
+在满足条件v后，变量a取值不确定的减少量，也即纯度的提升 $$ Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v) $$ 模型种类 $ID3$决策树
+模型表达式： $$ a_*=arg\enspace max\enspace Gain(D,a) $$
 模型缺陷：
-信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 C4.5决策树
+信息增益准则对可能取值数目较多的属性有所偏好，造成每个取值里面所包含的样本量太少，极端情况下，每种特殊划分的取值中仅包含一个样本，在这种情况下，决策树模型过拟合失效 $C4.5$决策树
 模型由来：
-为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\ 其中 IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\ a的取值个数V越大，通常IV(a)越大，\ 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 $$
-改善后的模型思路：
-先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性， CART决策树
-有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度 $$ 定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\ 因此，基尼值越小，碰到异类的概率越小，纯度越高。\ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\ =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\ =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
-类比信息熵和条件熵，我们得出在条件v下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
+为解决$ID3$模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益 因此引入新定义：增益率 $$ Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)} $$
+其中$IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}$，称为$a$的固有值 $a$的取值个数$V$越大，通常$IV(a)$​越大 因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反 改善后的模型思路：
+先基于$ID3$模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性 用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性 $CART$决策树
+模型由来：
+有别于$ID3$的思路，引入新概念基尼值用于衡量纯度 基尼值定义：
+从集合$D$​中随机抽取两个样本，其类别标记不一致的概率。
+因此，基尼值越小，碰到异类的概率越小，纯度越高。 $$ Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\newline =\sum\limits_{k=1}^{|y|}p_k(1-p_k)\newline =1-\sum\limits_{k=1}^{|y|}p_k^2 $$
+类比信息熵和条件熵，我们得出在条件$v$​下的基尼指数 $$ Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v) $$
 模型表达式： $$ a_*=arg\enspace max\enspace Gini_index(D,a) $$
-实际构造算法： $$
-基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$ $$ 2."/>
+实际构造算法：
+基于每个属性$a$的每个可能取值$v$，将数据集$D$分为$a=v$和$a\neq v$​两部分计算基尼值 $$ Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) &#43; \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v}) $$"/>
 
   
   
@@ -413,47 +413,40 @@ $$ a_*=arg\enspace max\enspace Gain(D,a) $$
 <h3 id="补充">补充</h3>
 <ol>
 <li>
-<p>详见对数几率回归中的自信息、信息熵</p>
+<p>在对数几率回归中我们了解了自信息、信息熵，下面引入一个新的概念，纯度。</p>
 </li>
 <li>
 <p>纯度与信息熵成反比，但似乎无法计算，只能依靠计算信息熵来反映</p>
 </li>
 <li>
-<p>条件熵</p>
+<p>条件熵定义：</p>
 <ol>
-<li>
-<p>$$
-假设现有关于变量a的集合D，计为a\in{a^1,a^2,a^3&hellip;a^n}\
-D^v表示当满足条件v时，变量a的集合，计为a\in{a^1,a^2,a^3&hellip;a^n}\
-\frac{|D^v|}{D}表示满足条件的a集合D^v，在所有a变量集合中的占比\
-那么满足条件v后，集合D的条件熵计为\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)
-$$</p>
-</li>
-<li>
-<p>信息增益
-$$
-在满足条件v后，变量a取值不确定的减少量，也即纯度的提升\
-Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)
-$$</p>
-</li>
+<li>假设现有关于变量$a$的集合$D$，计为$a\in{a^1,a^2,a^3&hellip;a^n}$</li>
+<li>$D^v$表示当满足条件$v$时，变量$a$的集合，计为$a\in{a^1,a^2,a^3&hellip;a^n}$​</li>
+<li>$\frac{|D^v|}{D}$表示满足条件的$a$集合$D^v$，在所有$a$​变量集合中的占比</li>
+<li>那么满足条件$v$后，集合$D$的条件熵计为$\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)$</li>
 </ol>
 </li>
-<li></li>
 <li>
-<p>ID3决策树</p>
+<p>信息增益定义：</p>
 <ol>
-<li>
-<p>补充:</p>
-<ol>
-<li>
-<p>模型表达式：</p>
+<li>在满足条件v后，变量a取值不确定的减少量，也即纯度的提升
+$$
+Gain(D,a)=Ent(D)-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Ent(D^v)
+$$</li>
+</ol>
 </li>
+</ol>
+<h3 id="模型种类">模型种类</h3>
+<ol>
 <li>
-<p>$$
+<p>$ID3$决策树</p>
+<ol>
+<li>
+<p>模型表达式：
+$$
 a_*=arg\enspace max\enspace Gain(D,a)
 $$</p>
-</li>
-</ol>
 </li>
 <li>
 <p>模型缺陷：</p>
@@ -464,51 +457,64 @@ $$</p>
 </ol>
 </li>
 <li>
-<p>C4.5决策树</p>
+<p>$C4.5$决策树</p>
 <ol>
 <li>
 <p>模型由来：</p>
 <ol>
-<li>为解决ID3模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益</li>
+<li>为解决$ID3$模型的缺陷，现引入权重IV来减少高取值数目属性的信息增益</li>
 </ol>
 </li>
 <li>
 <p>因此引入新定义：增益率
 $$
-Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}\
-其中
-IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}，称为a的固有值\
-a的取值个数V越大，通常IV(a)越大，\
-因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反
+Gain_ratio(D,a)=\frac{Gain(D,a)}{IV(a)}
 $$</p>
+<ol>
+<li>其中$IV(a)=-\sum\limits_{v=1}^{V}\frac{|D^v|}{D}log_2\frac{|D^v|}{D}$，称为$a$的固有值</li>
+<li>$a$的取值个数$V$越大，通常$IV(a)$​越大</li>
+<li>因此，增益率对可能取值数目较少的属性有所偏好，性质与信息增益正好相反</li>
+</ol>
 </li>
 <li>
 <p>改善后的模型思路：</p>
 <ol>
-<li>先基于ID3模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性</li>
-<li>用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性，</li>
+<li>先基于$ID3$模型，选择出信息增益率高于平均水平的属性，然后在基于增益率定义，从中选择出增益率最高的属性</li>
+<li>用人话：先将所有属性按照增益率高低排序，选取前50%，保证基本盘；而后筛选掉其中取值数目较多的属性</li>
 </ol>
 </li>
 </ol>
 </li>
 <li>
-<p>CART决策树</p>
+<p>$CART$决策树</p>
 <ol>
 <li>
-<p>有别于ID3的思路，引入一种新的概念基尼值用于衡量纯度
+<p>模型由来：</p>
+<ol>
+<li>有别于$ID3$的思路，引入新概念基尼值用于衡量纯度</li>
+</ol>
+</li>
+<li>
+<p>基尼值定义：</p>
+<ol>
+<li>
+<p>从集合$D$​中随机抽取两个样本，其类别标记不一致的概率。</p>
+</li>
+<li>
+<p>因此，基尼值越小，碰到异类的概率越小，纯度越高。
 $$
-定义：从集合D中随机抽取两个样本，其类别标记不一致的概率。\
-因此，基尼值越小，碰到异类的概率越小，纯度越高。\
-Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\
-=\sum\limits_{k=1}^{|y|}p_k(1-p_k)\
+Gini(D)=\sum\limits_{k=1}^{|y|}\sum\limits_{k\neq1}^{}p_k p_k&rsquo;\newline
+=\sum\limits_{k=1}^{|y|}p_k(1-p_k)\newline
 =1-\sum\limits_{k=1}^{|y|}p_k^2
 $$</p>
 </li>
 <li>
-<p>类比信息熵和条件熵，我们得出在条件v下的基尼指数
+<p>类比信息熵和条件熵，我们得出在条件$v$​下的基尼指数
 $$
 Gini_index(D,a)=\sum\limits_{v=1}^{V}\frac{|D^v|}{D}Gini(D^v)
 $$</p>
+</li>
+</ol>
 </li>
 <li>
 <p>模型表达式：
@@ -517,22 +523,24 @@ a_*=arg\enspace max\enspace Gini_index(D,a)
 $$</p>
 </li>
 <li>
-<p>实际构造算法：
-$$</p>
+<p>实际构造算法：</p>
 <ol>
-<li>基于每个属性a的每个可能取值v，将数据集D分为a=v和a\neq v两部分计算基尼值\
+<li>
+<p>基于每个属性$a$的每个可能取值$v$，将数据集$D$分为$a=v$和$a\neq v$​两部分计算基尼值
+$$
 Gini_index(D,a)=\frac{|D^{a=v}|}{D}Gini(D^{a=v}) + \frac{|D^{a\neq v}|}{D}Gini(D^{a\neq v})
-$$</li>
+$$</p>
+</li>
+<li>
+<p>选择基尼指数最小的属性及其对应取值作为最有划分属性和最优划分点</p>
+</li>
+<li>
+<p>重复以上两步，知道满足停止条件</p>
+</li>
+<li>
+<p>因此，$CART$决策树一定是二叉树，而$ID3$不一定是二叉树</p>
+</li>
 </ol>
-<p>$$
-2.选择基尼指数最小的属性及其对应取值作为最有划分属性和最优划分点
-$$</p>
-<p>$$
-3.重复以上两步，知道满足停止条件
-$$</p>
-<p>$$
-因此，CART决策树一定是二叉树，而ID3不一定是二叉树
-$$</p>
 </li>
 </ol>
 </li>
@@ -541,7 +549,6 @@ $$</p>
 <ol>
 <li>主流的使用方法是在集成学习的时候用作森林模型</li>
 </ol>
-<h3 id="求解方法">求解方法</h3>
 </section>
 
   
@@ -590,8 +597,8 @@ $$</p>
       <ul>
         <li><a href="#特点">特点</a></li>
         <li><a href="#补充">补充</a></li>
+        <li><a href="#模型种类">模型种类</a></li>
         <li><a href="#适用范围">适用范围</a></li>
-        <li><a href="#求解方法">求解方法</a></li>
       </ul>
     </li>
   </ul>
