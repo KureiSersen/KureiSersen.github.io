@@ -334,7 +334,7 @@
 <ol>
 <li>
 <p>根据显卡型号去nvidia<mark><a href="https://www.nvidia.com/download/index.aspx">下载地址</a></mark>下载驱动，得到.run文件 <strong>注意，不要开科学上网，nvidia官网好像有点毛病，科学上网加载不完全死活出不来界面</strong></p>
-<p><img src="/image-20240220144653252.png" alt="image-20240220144653252"></p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/image-20240220144653252.png" alt=""></p>
 </li>
 <li>
 <p>安装驱动，我这里刚买的4070tis显卡，截止安装驱动日期，最新的驱动版本是550.40.07</p>
@@ -415,7 +415,7 @@
 <ol>
 <li>
 <p>根据显卡驱动版本去找对应的CUDA版本，比如<code>550.40.07</code>驱动支持的CUDA版本截止安装驱动日期最高是<code>12.3</code>，所以先去nvidia CUDA<mark><a href="https://developer.nvidia.com/cuda-downloads?target_os=Linux&amp;target_arch=x86_64&amp;Distribution=Ubuntu&amp;target_version=22.04&amp;target_type=runfile_local">下载地址</a></mark>拿到CUDA Toolkit的run file</p>
-<p><img src="/image-20240220161345183.png" alt="image-20240220161345183"></p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/image-20240220161345183.png" alt=""></p>
 </li>
 <li>
 <p>安装CUDA</p>
@@ -423,7 +423,7 @@
 </span></span></code></pre></div></li>
 <li>
 <p>cuda本身自带一个比较老版本的nvidia driver，因为我们已经安装过nvidia driver了，所以这里用回车把他点掉，要不然会报错，其他的选项不用管，直接选中<code>Install</code>安装，这次安装比较丝滑，没有遇到任何问题，所以没有来得及截图，下面这张图是网图，但是样式是一样。</p>
-<p><img src="/image-20240220165701224.png" alt="image-20240220165701224"></p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/image-20240220165701224.png" alt=""></p>
 </li>
 <li>
 <p>安装完之后运行<code>nvcc --version</code>，诶这时候你发现，怎么没反应，为什么找不到命令，这是因为nvcc没有变成全局命令，运行下面的命令会有反应</p>
@@ -434,7 +434,7 @@
 <ol>
 <li>
 <p>pytorch相对就简单很多了，直接找到pytorch官网<a href="https://pytorch.org/get-started/locally/">下载地址</a>，复制<code>pip3</code>命令执行</p>
-<p><img src="/image-20240220170145157.png" alt="image-20240220170145157"></p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/image-20240220170145157.png" alt=""></p>
 </li>
 <li>
 <p><code>pip3</code>命令运行之前建议开科学上网，要不然很慢，安装之后，建议运行一下<code>nvidia-smi</code>，看看nvidia driver有没有因为未知原因被顶掉，我安装的时候被顶掉了，不得已重新卸载了nvidia driver又重新安装了一遍，如果<code>nvidia-smi</code>正常显示那么没问题</p>
@@ -470,6 +470,9 @@
   
   
   <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E8%A1%8C%E4%B8%9A/%E5%9C%B0%E4%BA%A7/%E5%9C%B0%E4%BA%A7%E5%A4%A7%E7%BA%B2/"><span class="mr-1.5">←</span><span>地产大纲</span></a>
     
     
     <a class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
