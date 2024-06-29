@@ -159,7 +159,7 @@
   <meta itemprop="name" content="2_naturalScenes">
 <meta itemprop="description" content=""><meta itemprop="datePublished" content="2024-06-21T10:47:33+08:00" />
 <meta itemprop="dateModified" content="2024-06-21T10:47:33+08:00" />
-<meta itemprop="wordCount" content="1022">
+<meta itemprop="wordCount" content="3709">
 <meta itemprop="keywords" content="练手项目,CNN,LeNet," />
   
   <meta property="og:title" content="2_naturalScenes" />
@@ -352,7 +352,7 @@
 <h3 id="模型确定">模型确定</h3>
 <ul>
 <li>
-<p>模型:选择最基本的$CNN$  $LeNet$ 网络作为本次测试模型，$CNN$部分设置4个卷积-池化块，全连接层设置为7层，$BATCHSIZE$设置为128</p>
+<p>模型:选择最基本的$CNN$  $LeNet$ 网络作为本次测试模型，$CNN$部分设置3个卷积-池化块，全连接层设置为7层，$BATCHSIZE$设置为128</p>
 </li>
 <li>
 <p>优化器:选择$Adadelta$优化器</p>
@@ -517,7 +517,469 @@
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;第</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">轮--平均loss值</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--平均正确率</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(i,loss_sum<span style="color:#f92672">/</span>len(train_loader),accuracy<span style="color:#f92672">/</span>len(train_loader)))
 </span></span></code></pre></div><h3 id="训练结果">训练结果</h3>
-<p>模型在训练集中的正确率稳定在99%，在测试集中的正确率稳定在%，</p></section>
+<p>模型在训练集中的正确率稳定在99%，在测试集中的正确率稳定在75%，很明显模型过拟合了，下面针对这个问题改进一下</p>
+<h2 id="20240625">20240625</h2>
+<h3 id="改进思路">改进思路</h3>
+<p>过拟合问题比较常见，改进思路有以下几种：</p>
+<ol>
+<li>缩小模型规模</li>
+<li>在模型中增加BN层</li>
+<li>在全连接网络中增加$Dropout$操作</li>
+<li>增加训练数据</li>
+<li>正则化</li>
+</ol>
+<p>在改进过程中，分别对上述做法进行了尝试，下面描述一下不同方法的效果</p>
+<ol>
+<li>缩小模型规模
+<ul>
+<li>模型确实没有了过拟合的特征，但是整体正确率变差，也并没有解决测试集与训练集正确率差距大的问题，这种操作在当前场景下不是很适用。</li>
+</ul>
+</li>
+<li>在全连接网络中增加$Dropout$操作
+<ul>
+<li>同等规模下模型训练速度变慢，需要迭代更多轮才能达到相同效果，但是依然没有解决过拟合问题。并且这种方法的适用性比较差，最新的模型中大都抛弃了这种方法。</li>
+</ul>
+</li>
+<li>在模型中增加BN层
+<ul>
+<li>有一定效果，模型在前几轮迭代中可以达到比较高的正确率，但是达到瓶颈期后的正确率降低</li>
+</ul>
+</li>
+<li>增加训练数据
+<ul>
+<li>在图片识别中可以使用图形变化，将图片旋转不同角度，来达到增加训练数据的目的，这种方法在实际使用过程中相对可行。下面实际看一下效果</li>
+</ul>
+</li>
+</ol>
+<h3 id="特征工程-1">特征工程</h3>
+<ul>
+<li>通过$transforms$随机水平翻转图片、随机旋转测试图片，以此增加测试数据</li>
+</ul>
+<h3 id="模型确定-1">模型确定</h3>
+<ul>
+<li>
+<p>模型:选择最基本的$CNN$  $LeNet$ 网络作为本次测试模型，$CNN$部分设置3个卷积-池化块，全连接层设置为7层，$BATCHSIZE$设置为128</p>
+</li>
+<li>
+<p>优化器:选择$Adadelta$优化器</p>
+</li>
+<li>
+<p>损失函数:选择$CrossEntropyLoss$函数</p>
+</li>
+</ul>
+<h3 id="完整代码-1">完整代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> SOURCE <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">predData</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/natural_scenes/seg_pred/seg_pred/&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>listdir(self<span style="color:#f92672">.</span>root_path)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>file_dir)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        image_path <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>file_dir[idx]
+</span></span><span style="display:flex;"><span>        img_jpg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>) 
+</span></span><span style="display:flex;"><span>        to_tensor <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>ToTensor()
+</span></span><span style="display:flex;"><span>        img_tensor <span style="color:#f92672">=</span> to_tensor(img_jpg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img_tensor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># {&#39;buildings&#39; -&gt; 0,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;forest&#39; -&gt; 1,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;glacier&#39; -&gt; 2,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;mountain&#39; -&gt; 3,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;sea&#39; -&gt; 4,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;street&#39; -&gt; 5 }</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">trainData</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/natural_scenes/seg_train/seg_train/&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>item <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;buildings&#39;</span>:<span style="color:#ae81ff">0</span>,<span style="color:#e6db74">&#39;forest&#39;</span>:<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;glacier&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;mountain&#39;</span>:<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;sea&#39;</span>:<span style="color:#ae81ff">4</span>,<span style="color:#e6db74">&#39;street&#39;</span>:<span style="color:#ae81ff">5</span>}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> key, value <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>item<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>listdir(self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> [key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#f92672">+</span> s <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> file_arr]
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">+=</span> file_arr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>file_dir)<span style="color:#f92672">*</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        integer <span style="color:#f92672">=</span> int(idx<span style="color:#f92672">/</span><span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># remainder = idx &amp; 4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        image_path <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>file_dir[integer]
+</span></span><span style="display:flex;"><span>        img_jpg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        transforms_comp <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Compose([
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>RandomHorizontalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>),
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>RandomRotation(<span style="color:#ae81ff">60</span>),
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>ToTensor(),
+</span></span><span style="display:flex;"><span>        ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        img_tensor <span style="color:#f92672">=</span> transforms_comp(img_jpg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img_tensor,torch<span style="color:#f92672">.</span>tensor(self<span style="color:#f92672">.</span>item[self<span style="color:#f92672">.</span>file_dir[integer]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#ae81ff">0</span>]],dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">testData</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/natural_scenes/seg_test/seg_test/&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>item <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;buildings&#39;</span>:<span style="color:#ae81ff">0</span>,<span style="color:#e6db74">&#39;forest&#39;</span>:<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;glacier&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;mountain&#39;</span>:<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;sea&#39;</span>:<span style="color:#ae81ff">4</span>,<span style="color:#e6db74">&#39;street&#39;</span>:<span style="color:#ae81ff">5</span>}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> key, value <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>item<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>listdir(self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> [key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#f92672">+</span> s <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> file_arr]
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">+=</span> file_arr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>file_dir)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        image_path <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>file_dir[idx]
+</span></span><span style="display:flex;"><span>        img_jpg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>) 
+</span></span><span style="display:flex;"><span>        to_tensor <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>ToTensor()
+</span></span><span style="display:flex;"><span>        img_tensor <span style="color:#f92672">=</span> to_tensor(img_jpg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img_tensor,torch<span style="color:#f92672">.</span>tensor(self<span style="color:#f92672">.</span>item[self<span style="color:#f92672">.</span>file_dir[idx]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#ae81ff">0</span>]],dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Net,self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>n_hidden <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv_layer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># input [batch_size,3,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,16,30,30]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,32,30,30]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,32,10,10]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,32,10,10]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,32,5,5]</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>full_layer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">32</span><span style="color:#f92672">*</span><span style="color:#ae81ff">5</span><span style="color:#f92672">*</span><span style="color:#ae81ff">5</span>,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 1</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 2</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 3</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 4</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 5</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 6</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,<span style="color:#ae81ff">6</span>)
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_layer(input)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>view(input<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>),<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>full_layer(out)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    BATCH_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># pred_loader = DataLoader(dataset=predData(), batch_size=BATCH_SIZE,drop_last=True)</span>
+</span></span><span style="display:flex;"><span>    train_loader <span style="color:#f92672">=</span> DataLoader(dataset<span style="color:#f92672">=</span>trainData(), batch_size<span style="color:#f92672">=</span>BATCH_SIZE, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">28</span>,pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    valid_loader <span style="color:#f92672">=</span> DataLoader(dataset<span style="color:#f92672">=</span>testData(), batch_size<span style="color:#f92672">=</span>BATCH_SIZE, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">28</span>,pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    net <span style="color:#f92672">=</span> Net()<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># train model</span>
+</span></span><span style="display:flex;"><span>    lossFun <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>CrossEntropyLoss()<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>    optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adadelta(net<span style="color:#f92672">.</span>parameters())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2000</span>):
+</span></span><span style="display:flex;"><span>        loss_sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        accuracy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;--------第</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">轮--------&#39;</span><span style="color:#f92672">.</span>format(i))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> idx,(data,lable) <span style="color:#f92672">in</span> enumerate(train_loader):
+</span></span><span style="display:flex;"><span>            data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>            lable <span style="color:#f92672">=</span> lable<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            y_pred <span style="color:#f92672">=</span> net(data)
+</span></span><span style="display:flex;"><span>            lable <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>reshape(lable,(<span style="color:#ae81ff">1</span>,BATCH_SIZE))[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># print(y_pred,lable)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> lossFun(y_pred,lable)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># print(y_pred)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>            loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>            optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            loss_sum <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>            accuracy <span style="color:#f92672">+=</span> (y_pred<span style="color:#f92672">.</span>argmax(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">==</span>lable)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">/</span>BATCH_SIZE
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># if(idx%100==0):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#     print(&#34;第{}次数据，loss为{}&#34;.format(idx,loss.item()))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print(&#39;第{}轮--平均loss值{}--平均正确率{}&#39;.format(i,loss_sum/len(train_loader),accuracy/len(train_loader)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        valid_loss_sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        valid_accuracy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> idx,(data,lable) <span style="color:#f92672">in</span> enumerate(valid_loader):
+</span></span><span style="display:flex;"><span>                data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>                lable <span style="color:#f92672">=</span> lable<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                y_pred <span style="color:#f92672">=</span> net(data)
+</span></span><span style="display:flex;"><span>                lable <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>reshape(lable,(<span style="color:#ae81ff">1</span>,BATCH_SIZE))[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>                loss <span style="color:#f92672">=</span> lossFun(y_pred,lable)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                valid_loss_sum <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>                valid_accuracy <span style="color:#f92672">+=</span> (y_pred<span style="color:#f92672">.</span>argmax(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">==</span>lable)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">/</span>BATCH_SIZE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;第</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">轮--平均loss值</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--平均正确率</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--验证集loss值</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--验证集平均正确率</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(i,loss_sum<span style="color:#f92672">/</span>len(train_loader),accuracy<span style="color:#f92672">/</span>len(train_loader),valid_loss_sum<span style="color:#f92672">/</span>len(valid_loader),valid_accuracy<span style="color:#f92672">/</span>len(valid_loader)))
+</span></span></code></pre></div><h3 id="训练结果-1">训练结果</h3>
+<p>模型在训练集中的正确率稳定在86%，在测试集中的正确率稳定在83%，过拟合问题有一定好转，但是模型正确率不高</p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/telegram-cloud-photo-size-5-6339239663402860195-y.jpg" alt="telegram-cloud-photo-size-5-6339239663402860195-y"></p>
+<h2 id="20240629">20240629</h2>
+<h3 id="改进思路-1">改进思路</h3>
+<p>正确率不高，期望通过增加模型复杂度解决，打算从$LeNet$换成$AlexNet$看看效果</p>
+<h3 id="特征工程-2">特征工程</h3>
+<p>仍然是通过$transforms$随机水平翻转图片、随机旋转测试图片，以此增加测试数据，没有什么变化</p>
+<h3 id="模型确定-2">模型确定</h3>
+<ul>
+<li>
+<p>模型:选择$CNN$  $AlexNet$ 网络作为本次测试模型，$CNN$部分设置4个卷积-$RELU$-卷积-$RELU$-池化块，卷积的大趋势是减少全连接层，并逐步由卷积层代替，因此在该模型全连接层减少为3层，$BATCHSIZE$设置为128</p>
+</li>
+<li>
+<p>优化器:选择$Adadelta$优化器</p>
+</li>
+<li>
+<p>损失函数:选择$CrossEntropyLoss$函数</p>
+</li>
+</ul>
+<h3 id="完整代码-2">完整代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> SOURCE <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">predData</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/natural_scenes/seg_pred/seg_pred/&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>listdir(self<span style="color:#f92672">.</span>root_path)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>file_dir)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        image_path <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>file_dir[idx]
+</span></span><span style="display:flex;"><span>        img_jpg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>) 
+</span></span><span style="display:flex;"><span>        to_tensor <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>ToTensor()
+</span></span><span style="display:flex;"><span>        img_tensor <span style="color:#f92672">=</span> to_tensor(img_jpg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img_tensor
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># {&#39;buildings&#39; -&gt; 0,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;forest&#39; -&gt; 1,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;glacier&#39; -&gt; 2,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;mountain&#39; -&gt; 3,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;sea&#39; -&gt; 4,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;street&#39; -&gt; 5 }</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">trainData</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/natural_scenes/seg_train/seg_train/&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>item <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;buildings&#39;</span>:<span style="color:#ae81ff">0</span>,<span style="color:#e6db74">&#39;forest&#39;</span>:<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;glacier&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;mountain&#39;</span>:<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;sea&#39;</span>:<span style="color:#ae81ff">4</span>,<span style="color:#e6db74">&#39;street&#39;</span>:<span style="color:#ae81ff">5</span>}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> key, value <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>item<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>listdir(self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> [key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#f92672">+</span> s <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> file_arr]
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">+=</span> file_arr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>file_dir)<span style="color:#f92672">*</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        integer <span style="color:#f92672">=</span> int(idx<span style="color:#f92672">/</span><span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># remainder = idx &amp; 4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        image_path <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>file_dir[integer]
+</span></span><span style="display:flex;"><span>        img_jpg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>) 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        transforms_comp <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>Compose([
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>RandomHorizontalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>),
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>RandomRotation(<span style="color:#ae81ff">60</span>),
+</span></span><span style="display:flex;"><span>            transforms<span style="color:#f92672">.</span>ToTensor(),
+</span></span><span style="display:flex;"><span>        ])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        img_tensor <span style="color:#f92672">=</span> transforms_comp(img_jpg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img_tensor,torch<span style="color:#f92672">.</span>tensor(self<span style="color:#f92672">.</span>item[self<span style="color:#f92672">.</span>file_dir[integer]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#ae81ff">0</span>]],dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">testData</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/natural_scenes/seg_test/seg_test/&#39;</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>item <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;buildings&#39;</span>:<span style="color:#ae81ff">0</span>,<span style="color:#e6db74">&#39;forest&#39;</span>:<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;glacier&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;mountain&#39;</span>:<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;sea&#39;</span>:<span style="color:#ae81ff">4</span>,<span style="color:#e6db74">&#39;street&#39;</span>:<span style="color:#ae81ff">5</span>}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> key, value <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>item<span style="color:#f92672">.</span>items():
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>listdir(self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span>)
+</span></span><span style="display:flex;"><span>            file_arr <span style="color:#f92672">=</span> [key <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;/&#39;</span> <span style="color:#f92672">+</span> s <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> file_arr]
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>file_dir <span style="color:#f92672">+=</span> file_arr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>file_dir)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, idx):
+</span></span><span style="display:flex;"><span>        image_path <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root_path <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>file_dir[idx]
+</span></span><span style="display:flex;"><span>        img_jpg <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(image_path)<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;RGB&#39;</span>) 
+</span></span><span style="display:flex;"><span>        to_tensor <span style="color:#f92672">=</span> transforms<span style="color:#f92672">.</span>ToTensor()
+</span></span><span style="display:flex;"><span>        img_tensor <span style="color:#f92672">=</span> to_tensor(img_jpg)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> img_tensor,torch<span style="color:#f92672">.</span>tensor(self<span style="color:#f92672">.</span>item[self<span style="color:#f92672">.</span>file_dir[idx]<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#ae81ff">0</span>]],dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>long)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Net</span>(torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(Net,self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>n_hidden <span style="color:#f92672">=</span> <span style="color:#ae81ff">2000</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv_layer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># input [batch_size,3,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,16,30,30]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.BatchNorm2d(16),</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,32,30,30]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.Conv2d(64, 64, 3, stride=1, padding=1), # output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,32,10,10]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.BatchNorm2d(32),</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,32,10,10]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.Conv2d(64, 64, 3, stride=1, padding=1), # output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,32,5,5]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,32,10,10]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.Conv2d(64, 64, 3, stride=1, padding=1), # output [batch_size,16,150,150]</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), <span style="color:#75715e"># output [batch_size,32,5,5]</span>
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>full_layer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">512</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1</span>,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 1</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,self<span style="color:#f92672">.</span>n_hidden), <span style="color:#75715e"># 2</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>ReLU(),
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.Linear(self.n_hidden,self.n_hidden), # 3</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.Linear(self.n_hidden,self.n_hidden), # 4</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.ReLU(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># torch.nn.Dropout(0.5),</span>
+</span></span><span style="display:flex;"><span>            torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Linear(self<span style="color:#f92672">.</span>n_hidden,<span style="color:#ae81ff">6</span>)
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, input):
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_layer(input)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> out<span style="color:#f92672">.</span>view(input<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>),<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        out <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>full_layer(out)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    BATCH_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># pred_loader = DataLoader(dataset=predData(), batch_size=BATCH_SIZE,drop_last=True)</span>
+</span></span><span style="display:flex;"><span>    train_loader <span style="color:#f92672">=</span> DataLoader(dataset<span style="color:#f92672">=</span>trainData(), batch_size<span style="color:#f92672">=</span>BATCH_SIZE, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">28</span>,pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>    valid_loader <span style="color:#f92672">=</span> DataLoader(dataset<span style="color:#f92672">=</span>testData(), batch_size<span style="color:#f92672">=</span>BATCH_SIZE, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, drop_last<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>,num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">28</span>,pin_memory<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    net <span style="color:#f92672">=</span> Net()<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># train model</span>
+</span></span><span style="display:flex;"><span>    lossFun <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>CrossEntropyLoss()<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>    optimizer <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>optim<span style="color:#f92672">.</span>Adadelta(net<span style="color:#f92672">.</span>parameters())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2000</span>):
+</span></span><span style="display:flex;"><span>        loss_sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        accuracy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;--------第</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">轮--------&#39;</span><span style="color:#f92672">.</span>format(i))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> idx,(data,lable) <span style="color:#f92672">in</span> enumerate(train_loader):
+</span></span><span style="display:flex;"><span>            data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>            lable <span style="color:#f92672">=</span> lable<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            y_pred <span style="color:#f92672">=</span> net(data)
+</span></span><span style="display:flex;"><span>            lable <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>reshape(lable,(<span style="color:#ae81ff">1</span>,BATCH_SIZE))[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># print(y_pred,lable)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> lossFun(y_pred,lable)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># print(y_pred)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            optimizer<span style="color:#f92672">.</span>zero_grad()
+</span></span><span style="display:flex;"><span>            loss<span style="color:#f92672">.</span>backward()
+</span></span><span style="display:flex;"><span>            optimizer<span style="color:#f92672">.</span>step()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            loss_sum <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>            accuracy <span style="color:#f92672">+=</span> (y_pred<span style="color:#f92672">.</span>argmax(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">==</span>lable)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">/</span>BATCH_SIZE
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># if(idx%100==0):</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#     print(&#34;第{}次数据，loss为{}&#34;.format(idx,loss.item()))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print(&#39;第{}轮--平均loss值{}--平均正确率{}&#39;.format(i,loss_sum/len(train_loader),accuracy/len(train_loader)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        valid_loss_sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        valid_accuracy <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> idx,(data,lable) <span style="color:#f92672">in</span> enumerate(valid_loader):
+</span></span><span style="display:flex;"><span>                data <span style="color:#f92672">=</span> data<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>                lable <span style="color:#f92672">=</span> lable<span style="color:#f92672">.</span>cuda()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                y_pred <span style="color:#f92672">=</span> net(data)
+</span></span><span style="display:flex;"><span>                lable <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>reshape(lable,(<span style="color:#ae81ff">1</span>,BATCH_SIZE))[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>                loss <span style="color:#f92672">=</span> lossFun(y_pred,lable)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                valid_loss_sum <span style="color:#f92672">+=</span> loss<span style="color:#f92672">.</span>item()
+</span></span><span style="display:flex;"><span>                valid_accuracy <span style="color:#f92672">+=</span> (y_pred<span style="color:#f92672">.</span>argmax(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">==</span>lable)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">/</span>BATCH_SIZE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#39;第</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">轮--平均loss值</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--平均正确率</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--验证集loss值</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">--验证集平均正确率</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(i,loss_sum<span style="color:#f92672">/</span>len(train_loader),accuracy<span style="color:#f92672">/</span>len(train_loader),valid_loss_sum<span style="color:#f92672">/</span>len(valid_loader),valid_accuracy<span style="color:#f92672">/</span>len(valid_loader)))
+</span></span></code></pre></div><h3 id="训练结果-2">训练结果</h3>
+<p>模型在训练集中的正确率稳定在93%，在测试集中的正确率稳定在86%，模型正确率仍有提高的空间</p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/telegram-cloud-photo-size-5-6053261087064833375-y.jpg" alt="telegram-cloud-photo-size-5-6053261087064833375-y"></p></section>
 
   
   
@@ -584,6 +1046,24 @@
         <li><a href="#模型确定">模型确定</a></li>
         <li><a href="#完整代码">完整代码</a></li>
         <li><a href="#训练结果">训练结果</a></li>
+      </ul>
+    </li>
+    <li><a href="#20240625">20240625</a>
+      <ul>
+        <li><a href="#改进思路">改进思路</a></li>
+        <li><a href="#特征工程-1">特征工程</a></li>
+        <li><a href="#模型确定-1">模型确定</a></li>
+        <li><a href="#完整代码-1">完整代码</a></li>
+        <li><a href="#训练结果-1">训练结果</a></li>
+      </ul>
+    </li>
+    <li><a href="#20240629">20240629</a>
+      <ul>
+        <li><a href="#改进思路-1">改进思路</a></li>
+        <li><a href="#特征工程-2">特征工程</a></li>
+        <li><a href="#模型确定-2">模型确定</a></li>
+        <li><a href="#完整代码-2">完整代码</a></li>
+        <li><a href="#训练结果-2">训练结果</a></li>
       </ul>
     </li>
   </ul>
