@@ -1,0 +1,471 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #faf8f1"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>4_santi - KureiSersen site</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="" />
+  <meta name="author" content="Edwin.Liang" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://kureisersen.github.io/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/theme.png" />
+
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/bdb2e3fd70444357aebf7a5e32555300?s=160&amp;d=identicon" />
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://kureisersen.github.io/github.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://kureisersen.github.io/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css"
+  integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI"
+  crossorigin="anonymous"
+/>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"
+  integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t"
+  crossorigin="anonymous"
+></script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js"
+  integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+  crossorigin="anonymous"
+></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () =>
+    renderMathInElement(document.body, {
+      
+      
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+      ],
+      
+      throwOnError: false,
+    }),
+  );
+</script>
+
+  
+  
+  
+
+  
+  <link rel="icon" href="https://kureisersen.github.io/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://kureisersen.github.io/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.122.0">
+
+  
+  
+  
+  
+  
+  <meta itemprop="name" content="4_santi">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2024-09-03T10:47:33+08:00" />
+<meta itemprop="dateModified" content="2024-09-03T10:47:33+08:00" />
+<meta itemprop="wordCount" content="541">
+<meta itemprop="keywords" content="计算机语言,word2vec," />
+  
+  <meta property="og:title" content="4_santi" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/4_santi/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-03T10:47:33+08:00" />
+<meta property="article:modified_time" content="2024-09-03T10:47:33+08:00" />
+
+
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="4_santi"/>
+<meta name="twitter:description" content=""/>
+
+  
+  
+  
+  <link rel="canonical" href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/4_santi/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://kureisersen.github.io/"
+      >KureiSersen site</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#faf8f1'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        ></a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/KureiSersen"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-12 dark:prose-invert"
+    >
+      
+
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">4_santi</h1>
+
+    
+    <div class="text-sm antialiased opacity-60">
+      
+      <time>Sep 3, 2024</time>
+      
+      
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Edwin.Liang</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="数据来源">数据来源</h2>
+<p>数据来自网上下载的中文&lt;三体&gt;小说,词向量方面的探索将以此为素材</p>
+<h2 id="20240903">20240903</h2>
+<h3 id="数据处理">数据处理</h3>
+<ul>
+<li>分词:使用$pkuseg$工具包进行分词处理,处理之后的文本单独存放为$santi_output$文件</li>
+<li>去除标点符号等非中文字符</li>
+</ul>
+<h3 id="模型确定">模型确定</h3>
+<ul>
+<li>模型:使用$gensim$库,调用$word2vec$感受一下初代词向量,其中词向量大小设置为$200$,窗口大小设置为$5$</li>
+</ul>
+<h3 id="完整代码">完整代码</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span>sys<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>append(<span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> SOURCE <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">segmentation</span>(input_dir,output_dir):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># pkuseg.test(input_dir, output_dir, nthread=28)   </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fo <span style="color:#f92672">=</span> open(output_dir,<span style="color:#e6db74">&#34;r&#34;</span>)
+</span></span><span style="display:flex;"><span>    lines <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> fo:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print(line)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        line_temp <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>        words <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> line_temp:
+</span></span><span style="display:flex;"><span>            i <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[^\w\s]&#39;</span>,<span style="color:#e6db74">&#39;&#39;</span>,i)
+</span></span><span style="display:flex;"><span>            i <span style="color:#f92672">=</span> i<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> len(i) <span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                words<span style="color:#f92672">.</span>append(i)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(words) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            lines<span style="color:#f92672">.</span>append(words)
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># print(words)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> lines
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    lines <span style="color:#f92672">=</span> segmentation(<span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/santi.txt&#39;</span>,<span style="color:#e6db74">&#39;/home/kureisersen/Documents/python3/ai/data/dateDir/santi_output.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>    models <span style="color:#f92672">=</span> Word2Vec(sentences<span style="color:#f92672">=</span>lines, vector_size<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>, window<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>, min_count<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, workers<span style="color:#f92672">=</span><span style="color:#ae81ff">28</span>)
+</span></span><span style="display:flex;"><span>    print(models<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>most_similar(<span style="color:#e6db74">&#39;叶文洁&#39;</span>,topn<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>))
+</span></span></code></pre></div><h3 id="训练结果">训练结果</h3>
+<p>打印了与灵魂导师&quot;叶文洁&quot;相似度最高的前十个结果,感觉效果是有的,但是并没有那么好,继续探索.</p>
+<p><img src="https://raw.githubusercontent.com/KureiSersen/image-hosting/main/202409032245066.png" alt="image-20240903224550925"></p>
+<h2 id="20240920">20240920</h2>
+<h3 id="环境搭建">环境搭建</h3>
+<ul>
+<li>$glove$算法:使用<mark><a href="https://github.com/stanfordnlp/glove">stanfordnlp</a></mark>,代码是$C$语言写的。</li>
+<li>用分词好的文档替换$demo.sh$中的$CORPUS$​参数</li>
+<li>执行一下$demo.sh$得到分词后的词向量结果文件$vectors.txt$</li>
+</ul>
+<h3 id="模型确定-1">模型确定</h3>
+<ul>
+<li>模型:使用$glove$算法,看看和$word2vec$有什么区别,其中词向量大小设置为$50$,窗口大小设置为$15$</li>
+</ul>
+<h3 id="完整代码-1">完整代码</h3></section>
+
+  
+  
+  <footer class="mt-12 flex flex-wrap">
+     
+    <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80">计算机语言</a>
+     
+    <a class="mb-1.5 mr-1.5 rounded-lg bg-black/[3%] px-5 py-1.5 no-underline dark:bg-white/[8%]" href="https://kureisersen.github.io/tags/word2vec">word2vec</a>
+    
+  </footer>
+  
+
+
+  
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-semibold no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/3_abstract_1_2/"><span>3_abstract_1_2</span><span class="ml-1.5">→</span></a>
+    
+  </nav>
+  
+  
+
+  
+  
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'https-kureisersen-github-io';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+
+  
+  
+
+  
+
+
+  
+</article>
+
+<aside>
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#数据来源">数据来源</a></li>
+    <li><a href="#20240903">20240903</a>
+      <ul>
+        <li><a href="#数据处理">数据处理</a></li>
+        <li><a href="#模型确定">模型确定</a></li>
+        <li><a href="#完整代码">完整代码</a></li>
+        <li><a href="#训练结果">训练结果</a></li>
+      </ul>
+    </li>
+    <li><a href="#20240920">20240920</a>
+      <ul>
+        <li><a href="#环境搭建">环境搭建</a></li>
+        <li><a href="#模型确定-1">模型确定</a></li>
+        <li><a href="#完整代码-1">完整代码</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</aside>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    
+  </div>
+  <a class="link" href="https://kureisersen.github.io/"> &copy; 2024KureiSersen site</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo️️</a>️
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">✎ Paper</a>
+</footer>
+  </body>
+</html>

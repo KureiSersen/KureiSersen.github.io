@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>word2vec on KureiSersen site</title>
+    <link>https://kureisersen.github.io/tags/word2vec/</link>
+    <description>Recent content in word2vec on KureiSersen site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Sep 2024 10:47:33 +0800</lastBuildDate>
+    <atom:link href="https://kureisersen.github.io/tags/word2vec/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>4_santi</title>
+      <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/4_santi/</link>
+      <pubDate>Tue, 03 Sep 2024 10:47:33 +0800</pubDate>
+      <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%AD%E8%A8%80/4_santi/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
