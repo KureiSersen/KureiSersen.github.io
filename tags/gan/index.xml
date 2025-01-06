@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GAN on KureiSersen site</title>
+    <link>https://kureisersen.github.io/tags/gan/</link>
+    <description>Recent content in GAN on KureiSersen site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jan 2025 15:49:27 +0800</lastBuildDate>
+    <atom:link href="https://kureisersen.github.io/tags/gan/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>4_deepface</title>
+      <link>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/4_deepface/</link>
+      <pubDate>Mon, 06 Jan 2025 15:49:27 +0800</pubDate>
+      <guid>https://kureisersen.github.io/post/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/4_deepface/</guid>
+      <description>&lt;p&gt;最近接到一个小需求,用于将真实摄像头中拍摄的人脸替换成其他人脸并在会议软件中展示,想了两天然后一天完成,下面简单记录一下整体实现过程&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
